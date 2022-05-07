@@ -8,12 +8,28 @@ general idea:
 		then it is alternating turns. 
 		Random targets are selected for each attack. 
 		Whoever has last man standing wins.
+	If you win, your pokemon will increase in level/experience and stats will be increased accordingly.
+	
+	Proceeding, there will be an intermediary event where you choose to add another pokemon to your team.
+	Can be denied or accepted and the event will follow accordingly. 
+	Pokes once added to your team, can not be removed for the remainder of the game.`
 
-	If you win, your pokemon will increase in level/experience and stats will be increased accordingly. Proceeding, there will be an intermediary event where either you get an item to add to your team, or another follower to join your team. These events can be denied or accepted and the event will follow accordingly. Items once put on a poke, or pokes once added to your team, can not be removed for the remainder of the game.
-	Battle -> Item/follower -> Battle -> Item/follower … and so on until you lose a battle
+Begin:
+	1. Hit play game
+	2. Select one of three randomly generated pokemon
+	3. First battle encounter (1v1 same level)
+	LOOP UNTIL YOU LOSE:
+		select new teammate
+		battle
+			if win:
+				go to top (select teammate, battle...)
+			if loss:
+				end the game
+
+
 
 POKEAPI: https://pokeapi.co/
-	from what I read, does not need a key to access, 
+	from what I read, does not need a key to access,  (have made connection and pulled data obj for a specific pokemon)
 	is free open source
 	has so much information about every pokemon, am currently researching methods:
 	Could be useful lets say obj is (Pokemon):’
@@ -23,13 +39,3 @@ POKEAPI: https://pokeapi.co/
 		Poke.getRegionByName
 		Poke.getStatByName
 		Poke.getTypeByName
-
-As you progress through game, your team of pokemon will grow as you encounter new followers who would like to join you. 
-Gain experience after each fight for your pokemon.
-Your team levels up 
-
-Begin:
-	1. Hit play game
-	2. Select one of three randomly generated pokemon
-	3. First battle encounter (1v1 same level)
-	4. 
