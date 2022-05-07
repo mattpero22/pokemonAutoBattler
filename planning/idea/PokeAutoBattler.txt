@@ -26,8 +26,6 @@ Begin:
 			if loss:
 				end the game
 
-
-
 POKEAPI: https://pokeapi.co/
 	from what I read, does not need a key to access,  (have made connection and pulled data obj for a specific pokemon)
 	is free open source
