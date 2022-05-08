@@ -3,6 +3,8 @@ body {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    color: whitesmoke;
+    background-color: rgba(105, 90, 205, 0.727);
 }
 
 h1, h3 {
