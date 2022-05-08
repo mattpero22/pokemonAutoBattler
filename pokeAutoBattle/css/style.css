@@ -13,7 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: center;
+    align-items: center;
     color: whitesmoke;
     background-color: rgba(105, 90, 205, 0.727);
     font-family: 'pokemonFont';
@@ -25,4 +25,11 @@ body {
     padding: 10px 50px;
     text-align: center;
     border-radius: 10px;
+    margin: 4px;
+}
+
+#startmenu-btns {
+    display: flex;
+    flex-direction: column;
+
 }
