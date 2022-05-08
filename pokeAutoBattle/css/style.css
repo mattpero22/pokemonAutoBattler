@@ -3,21 +3,24 @@
     src: url("./fonts/Pokemon\ Classic.ttf");
 }
 
+html {
+    height: 100vh;
+}
 
 body {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     color: whitesmoke;
     background-color: rgba(105, 90, 205, 0.727);
     font-family: 'pokemonFont';
-}
-
-h1, h3 {
     text-align: center;
 }
 
 input {
     font-family: 'pokemonFont';
+    padding: 10px 50px;
+    text-align: center;
+    border-radius: 10px;
 }
