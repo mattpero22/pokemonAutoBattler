@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'pokemonFont';
+    src: url("./fonts/Pokemon\ Classic.ttf");
+}
+
+
 body {
     display: flex;
     flex-direction: column;
@@ -5,8 +11,13 @@ body {
     align-items: center;
     color: whitesmoke;
     background-color: rgba(105, 90, 205, 0.727);
+    font-family: 'pokemonFont';
 }
 
 h1, h3 {
     text-align: center;
+}
+
+input {
+    font-family: 'pokemonFont';
 }
