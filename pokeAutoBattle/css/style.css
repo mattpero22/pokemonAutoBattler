@@ -21,3 +21,7 @@ h1, h3 {
 input {
     font-family: 'pokemonFont';
 }
+
+#title-box {
+    max-width: 95%;
+}
