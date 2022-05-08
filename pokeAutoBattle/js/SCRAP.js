@@ -6,12 +6,27 @@ const pokemonURL = "https://pokeapi.co/api/v2/pokemon/";
 let $body = $('body')
 
 // Function to retrieve a pokemon and store as a local variable
-function getPokemonObj(number) {
+function getPokemonByNum(number) {
     return $.parseJSON($.ajax({
         url: pokemonURL + number,
         async: false,
     }).responseText);
 }
 
-let result = getPokemonObj(122);
-console.log(result.name)
+function getPokemonByName(name) {
+    return $.parseJSON($.ajax({
+        url: pokemonURL + name,
+        async: false,
+    }).responseText);
+}
+
+let sableye = getPokemonByNum(1);
+console.log(sableye)
+console.log(sableye.sprites.front_default)
+$body.append(`<p>${sableye.name}</p>`)
+$body.append(`<img src='${sableye.sprites.front_default}'/>`)
+
+let eevee = getPokemonByName('eevee');
+$body.append(`<p>${eevee.name}</p>`)
+$body.append(`<img src='${eevee.sprites.front_default}'/>`)
+
