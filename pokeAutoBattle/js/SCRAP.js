@@ -19,14 +19,3 @@ function getPokemonByName(name) {
         async: false,
     }).responseText);
 }
-
-let sableye = getPokemonByNum(1);
-console.log(sableye)
-console.log(sableye.sprites.front_default)
-$body.append(`<p>${sableye.name}</p>`)
-$body.append(`<img src='${sableye.sprites.front_default}'/>`)
-
-let eevee = getPokemonByName('eevee');
-$body.append(`<p>${eevee.name}</p>`)
-$body.append(`<img src='${eevee.sprites.front_default}'/>`)
-
