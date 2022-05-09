@@ -58,11 +58,7 @@ function getValidPokemonChoice(region) {
         console.log(pokemon.id, pokemon.name, pokeSpec)
         if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {
             let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);
-            if (pokeEvoChain.chain.isBaby === true) {       // if its a baby pokemon its first evo
-                validChoice = true;
-                return pokemon
-            }
-            else if(pokeEvoChain.chain.species.name === pokemon.name) {
+            if(pokeEvoChain.chain.species.name === pokemon.name) {
                 validChoice = true;
                 return pokemon
             } 
