@@ -17,3 +17,10 @@ function getPokemonByName(name) {
         async: false,
     }).responseText);
 }
+
+// Function to change screen
+function changeScreen() {
+    $('body').fadeOut(0)
+    $('body').append('<input type="button" value="Cancel">').click(()=>location.href="./index.html")
+    $('body').fadeIn(2000)
+}
