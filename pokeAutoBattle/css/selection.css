@@ -5,6 +5,18 @@
 
 body {
     background-image: url("./images/forest.png");
+    height: 80vh;
     font-family: 'pokemonFont';
     display: flex;
+    flex-direction: column;
+}
+
+#select-menu {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.poke-card {
+    display: flex;
+    flex-flow: column center;
 }
