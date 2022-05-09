@@ -4,7 +4,7 @@ $playBtn = $('#play-btn')       // starts game
 $rulesBtn = $('#rules-btn')     // displays the rule frame
 
 // fade in on load
-$(window).on('load', changeScreen())
+$(window).on('load', fadeScreen())
 
 // if play btn clicked, set it to target firstpick.html
 $playBtn.click(function(){

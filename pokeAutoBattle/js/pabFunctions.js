@@ -2,11 +2,29 @@
 const pokedexURL = "https://pokeapi.co/api/v2/pokedex/";
 const pokemonURL = "https://pokeapi.co/api/v2/pokemon/";
 const evolutionURL = "https://pokeapi.co/api/v2/evolution-chain/";
+const growthURL = "https://pokeapi.co/api/v2/growth-rate/";
+
+// shorthand stats data object
+const statsAbbr = {
+    hp: "HP",
+    attack: "ATK",
+    defense: "DEF",
+    "special-attack": "SPA",
+    "special-defense": "SPD",
+    speed: "SPE"
+}
+
+// typing color data object
+const typeColor = {}
 
 // Function to change screen
-function changeScreen() {
+function fadeScreen() {
     $('body').fadeOut(0)
     $('body').fadeIn(1000)
+}
+
+function loadScreen() {
+    
 }
 
 // Function to retrieve a pokemon by number and store as a obj
@@ -67,13 +85,13 @@ function getValidPokemonChoice(region) {
 
 // generate pokemon selection card
 function generatePokeCard(pokemon, div){
-    console.log(pokemon.types)
     $div = $(div);
     $div.append(
         `<h2>${pokemon.name}</h2s>`,
         `<img src="${pokemon.sprites.front_default}"/>`,
     );
-    pokemon.types.forEach((type) => $div.append(`<p>${type.type.name}</p>`))
- 
-
+    pokemon.types.forEach((type) => $div.append(`<p class="type">${type.type.name}</p>`));
+    
+    pokemon.stats.forEach((stat) => console.log(stat.base_stat));
+    pokemon.stats.forEach((stat) => $div.append(`<p>${stat.base_stat} ${statsAbbr[stat.stat.name]}</p>`));
 }

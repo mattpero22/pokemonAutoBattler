@@ -3,6 +3,11 @@
     src: url("./fonts/Pokemon\ Classic.ttf");
 }
 
+.loading {
+    background-image: url("https://i.imgur.com/BwTs7q9.gif");
+    background-size: auto;
+}
+
 body {
     background-image: url("./images/forest.png");
     background-size: cover;
