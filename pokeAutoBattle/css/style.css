@@ -13,7 +13,8 @@ body {
     text-align: center;
 }
 
-#logo {git st
+#logo {
+    margin-top: 25px;
     align-items: center;
     padding-right: 25px;
 }
