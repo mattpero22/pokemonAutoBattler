@@ -19,12 +19,15 @@ function getPokemonByName(name) {
 }
 
 // Function to retrieve the # of entries when passed the type of pokedex
-function getNumDexEntriesByRegion(region) {
-    return $.ajax(pokedexURL+region).then((data) => console.log(data))
+function getPokedexByRegion(region) {
+    return $.parseJSON($.ajax({
+        url: pokedexURL+region,
+        async: false,
+    }).responseText)
 }
 
 // Function to change screen
 function changeScreen() {
     $('body').fadeOut(0)
-    $('body').fadeIn(1000)
+    $('body').fadeIn(100)
 }
