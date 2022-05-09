@@ -1,5 +1,5 @@
 // Useful constant links to API
-const pokedexURL = "https://pokeapi.co/api/v2/pokedex/national";
+const pokedexURL = "https://pokeapi.co/api/v2/pokedex/";
 const pokemonURL = "https://pokeapi.co/api/v2/pokemon/";
 
 // Function to retrieve a pokemon by number and store as a obj
@@ -16,4 +16,18 @@ function getPokemonByName(name) {
         url: pokemonURL + name,
         async: false,
     }).responseText);
+}
+
+// Function to retrieve the # of entries when passed the type of pokedex
+function getPokedexByRegion(region) {
+    return $.parseJSON($.ajax({
+        url: pokedexURL+region,
+        async: false,
+    }).responseText)
+}
+
+// Function to change screen
+function changeScreen() {
+    $('body').fadeOut(0)
+    $('body').fadeIn(100)
 }

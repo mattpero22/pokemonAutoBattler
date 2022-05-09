@@ -8,13 +8,12 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     font-family: 'pokemonFont';
     text-align: center;
 }
 
 #logo {
-    margin-top: 25px;
     align-items: center;
     padding-right: 25px;
 }
@@ -27,7 +26,7 @@ body {
 }
 
 #my-name {
-    position: absolut;
     bottom: 0;
-    color: rgb(88, 56, 4);
+    right: 0;
+    position: absolute;
 }

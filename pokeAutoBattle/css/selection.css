@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'pokemonFont';
+    src: url("./fonts/Pokemon\ Classic.ttf");
+}
+
+body {
+    background-image: url("./images/forest.png");
+    font-family: 'pokemonFont';
+    display: flex;
+}
