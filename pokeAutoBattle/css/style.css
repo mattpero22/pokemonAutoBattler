@@ -13,25 +13,20 @@ body {
     text-align: center;
 }
 
-#logo {
+#logo {git st
     align-items: center;
     padding-right: 25px;
 }
 
-#startmenu-btns {
-    display: flex;
-    flex-direction: column;
-}
-
 .startmenu-btn {
     font-family: 'pokemonFont';
-    text-align: center;
     padding: 10px 50px;
+    text-align: center;
     border-radius: 10px;
 }
 
 #my-name {
-    position: absolute;
+    position: absolut;
     bottom: 0;
     color: rgb(88, 56, 4);
 }
