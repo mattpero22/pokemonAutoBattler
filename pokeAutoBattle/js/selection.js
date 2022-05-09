@@ -14,17 +14,21 @@ $card3 = $('#card3')
 $selectmenu = $("select-menu")
 
 // fadeIn on load for a nicer effect
-$(window).on('load', changeScreen())
+$(window).on('load')
 $('body').click(()=>location.href="./index.html")
 
 // get the highest allowed number for the pokemon and then get 3 randomly
+$('body').attr("background", "./images/startersLoadingScreen.jpg")
 pokemon1 = getValidPokemonChoice(regionType);
 pokemon2 = getValidPokemonChoice(regionType);
 pokemon3 = getValidPokemonChoice(regionType);
 console.log(pokemon1.name, pokemon2.name, pokemon3.name)
+console.log(pokemon1)
+console.log(pokemon2)
+console.log(pokemon3)
 
-$card1.append(`<p>${pokemon1.name}<p>`, `<img src="${pokemon1.sprites.front_default}"/>`)
-$card2.append(`<p>${pokemon2.name}<p>`, `<img src="${pokemon2.sprites.front_default}"/>`)
-$card3.append(`<p>${pokemon3.name}<p>`, `<img src="${pokemon3.sprites.front_default}"/>`)
+generatePokeCard(pokemon1, '#card1');
+generatePokeCard(pokemon2, '#card2');
+generatePokeCard(pokemon3, '#card3');
 
 getValidPokemonChoice(regionType);

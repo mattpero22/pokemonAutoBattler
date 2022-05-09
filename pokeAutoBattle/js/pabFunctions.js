@@ -50,17 +50,30 @@ function getPokemonEvoChainByURL(evoChainURL) {
 
 // Get valid choice pokemon
 function getValidPokemonChoice(region) {
-    let validChoice = false;
-    pokemonRange = getPokedexByRegion(region).pokemon_entries.length;
-    while (validChoice === false) {
-        let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));
-        let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);
-        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {
-            let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);
-            if(pokeEvoChain.chain.species.name === pokemon.name) {
+    let validChoice = false;                                                    // hard exit condition to enter while loop
+    pokemonRange = getPokedexByRegion(region).pokemon_entries.length;           // gets max number allowed
+    while (validChoice === false) {                                             // enter while loop
+        let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));// get a pokemon object 
+        let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);             // get the pokemon species object
+        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic
+            let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);//if it isnt, get the pokemons evolution chain object
+            if(pokeEvoChain.chain.species.name === pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
                 validChoice = true;
                 return pokemon
             } 
         }
     }
+}
+
+// generate pokemon selection card
+function generatePokeCard(pokemon, div){
+    console.log(pokemon.types)
+    $div = $(div);
+    $div.append(
+        `<h2>${pokemon.name}</h2s>`,
+        `<img src="${pokemon.sprites.front_default}"/>`,
+    );
+    pokemon.types.forEach((type) => $div.append(`<p>${type.type.name}</p>`))
+ 
+
 }

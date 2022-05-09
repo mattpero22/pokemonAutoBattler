@@ -19,5 +19,16 @@ body {
 
 .poke-card {
     display: flex;
-    flex-flow: column center;
+    flex-direction: column;
+    width: 200px;
+}
+
+.poke-card>img{
+    width: 80%;
+    max-width: 200px;
+    max-height: 200px;;
+}
+
+.poke-card>p{
+    margin: 0;
 }
