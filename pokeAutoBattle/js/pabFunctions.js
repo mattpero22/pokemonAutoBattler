@@ -20,9 +20,7 @@ function getPokemonByName(name) {
 
 // Function to change screen
 function changeScreen() {
-    $(window).on('load', function() {
-        $('body').fadeOut(0)
-        $('body').append('<input type="button" value="Cancel">').click(()=>location.href="./index.html")
-        $('body').fadeIn(250)
-    })
+    $('body').fadeOut(0)
+    $('body').append('<input type="button" value="Cancel">').click(()=>location.href="./index.html")
+    $('body').fadeIn(2000)
 }
