@@ -5,7 +5,8 @@
 
 body {
     background-image: url("./images/forest.png");
-    height: 80vh;
+    background-size: cover;
+    height: 100vh;
     font-family: 'pokemonFont';
     display: flex;
     flex-direction: column;

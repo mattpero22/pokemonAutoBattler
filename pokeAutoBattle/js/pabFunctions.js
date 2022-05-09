@@ -55,7 +55,6 @@ function getValidPokemonChoice(region) {
     while (validChoice === false) {
         let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));
         let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);
-        console.log(pokemon.id, pokemon.name, pokeSpec)
         if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {
             let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);
             if(pokeEvoChain.chain.species.name === pokemon.name) {
