@@ -37,7 +37,7 @@ const typeColor = {
 }
 
 // ultra beasts data structure
-let ultraBeasts =["Nihilego","Buzzwole","Pheromosa","Xurkitree","Celesteela","Kartana","Guzzlord","Poipole","Naganadel","Stakataka","Blacephalon"]
+let ultraBeasts =["nihilego","buzzwole","pheromosa","xurkitree","celesteela","kartana","guzzlord","poipole","naganadel","stakataka","blacephalon"]
 
 // Function to change screen
 function fadeScreen() {
@@ -49,7 +49,7 @@ function fadeScreen() {
 function getPokemonByNum(number) {
     return $.parseJSON($.ajax({ //parse return of ajax.responseText as JSON to get obj back
         url: pokemonURL + number, //pass args for ajax call as an obj to customize it more, this line does url
-        async: false,   // makes ajax execute in sync s.t. we have the pokemon we need to move on
+        async: false,   // makes ajax execute in sync s.t. we have the pokemon we need to move on, before moving on
     }).responseText);
 }
 
@@ -92,12 +92,15 @@ function getValidPokemonChoice(region) {
         let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));// get a pokemon object 
         let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);             // get the pokemon species object
         console.log(pokemon.name)
-        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic   
-            let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);//if it isnt, get the pokemons evolution chain object
-            if(pokeEvoChain.chain.species.name === pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
-                validChoice = true;
-                return pokemon
-            } 
+        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic
+            console.log(ultraBeasts.includes(pokemon.name))
+            if(ultraBeasts.includes(pokemon.name) === false){
+                let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);//if it isnt, get the pokemons evolution chain object
+                if(pokeEvoChain.chain.species.name === pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
+                    validChoice = true;
+                    return pokemon
+                } 
+            }
         }
     }
 }
