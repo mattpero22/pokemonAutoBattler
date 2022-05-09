@@ -25,13 +25,13 @@ body {
 
 .startmenu-btn {
     font-family: 'pokemonFont';
-    padding: 10px 50px;
     text-align: center;
+    padding: 10px 50px;
     border-radius: 10px;
 }
 
 #my-name {
-    position: absolut;
+    position: absolute;
     bottom: 0;
     color: rgb(88, 56, 4);
 }
