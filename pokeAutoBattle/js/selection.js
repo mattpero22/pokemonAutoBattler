@@ -14,7 +14,7 @@ $card3 = $('#card3')
 $selectmenu = $("select-menu")
 
 // fadeIn on load for a nicer effect
-$(window).on('load', loadScreen())
+$(window).on('load')
 $('body').click(()=>location.href="./index.html")
 
 // get the highest allowed number for the pokemon and then get 3 randomly

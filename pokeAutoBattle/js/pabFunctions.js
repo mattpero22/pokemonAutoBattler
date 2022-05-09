@@ -15,16 +15,31 @@ const statsAbbr = {
 }
 
 // typing color data object
-const typeColor = {}
+const typeColor = {
+    normal:  "#E2C6A2",
+    fire:   "#E16355",
+    water:   "#5565E1",
+    grass:   "#619C63",
+    electric:   "#D9CA5D",
+    ice:   "#5DD7D9",
+    fighting:   "#914D34",
+    poison:   "#945BBA",
+    ground:   "#CC8B4E",
+    flying:   "#ACCEE8",
+    psychic:   "#E68ED1",
+    bug:   "#CAE366",
+    rock:  "#6B450F",
+    ghost:   "#9F74DB",
+    dark:   "#5A5461",
+    dragon: "#6437DE",
+    steel: "#9692A1",
+    fairy: "#EDB9E4",
+}
 
 // Function to change screen
 function fadeScreen() {
     $('body').fadeOut(0)
     $('body').fadeIn(1000)
-}
-
-function loadScreen() {
-    
 }
 
 // Function to retrieve a pokemon by number and store as a obj
@@ -90,8 +105,6 @@ function generatePokeCard(pokemon, div){
         `<h2>${pokemon.name}</h2s>`,
         `<img src="${pokemon.sprites.front_default}"/>`,
     );
-    pokemon.types.forEach((type) => $div.append(`<p class="type">${type.type.name}</p>`));
-    
-    pokemon.stats.forEach((stat) => console.log(stat.base_stat));
+    pokemon.types.forEach((type) => $div.append($(`<p>${type.type.name}</p>`).css({backgroundColor: typeColor[type.type.name]})));
     pokemon.stats.forEach((stat) => $div.append(`<p>${stat.base_stat} ${statsAbbr[stat.stat.name]}</p>`));
 }
