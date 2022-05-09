@@ -36,6 +36,9 @@ const typeColor = {
     fairy: "#EDB9E4",
 }
 
+// ultra beasts data structure
+let ultraBeasts =["Nihilego","Buzzwole","Pheromosa","Xurkitree","Celesteela","Kartana","Guzzlord","Poipole","Naganadel","Stakataka","Blacephalon"]
+
 // Function to change screen
 function fadeScreen() {
     $('body').fadeOut(0)
@@ -88,7 +91,8 @@ function getValidPokemonChoice(region) {
     while (validChoice === false) {                                             // enter while loop
         let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));// get a pokemon object 
         let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);             // get the pokemon species object
-        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic
+        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false && ultraBeasts.includes(pokemon.name) === false) {// check if it is a legendary or mythic
+
             let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);//if it isnt, get the pokemons evolution chain object
             if(pokeEvoChain.chain.species.name === pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
                 validChoice = true;
