@@ -26,7 +26,5 @@ body {
 }
 
 #my-name {
-    position: absolut;
     bottom: 0;
-    color: rgb(88, 56, 4);
 }
