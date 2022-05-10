@@ -11,6 +11,7 @@ let regionType = 'national';
 $card1 = $('#card1')
 $card2 = $('#card2')
 $card3 = $('#card3')
+$pokeCard = $('.poke-card')
 $selectmenu = $("select-menu")
 
 // fadeIn on load for a nicer effect
@@ -29,3 +30,4 @@ console.log(pokemon1)
 generatePokeCard(pokemon1, '#card1');
 generatePokeCard(pokemon2, '#card2');
 generatePokeCard(pokemon3, '#card3');
+$pokeCard.click((evt) => console.log(evt))
