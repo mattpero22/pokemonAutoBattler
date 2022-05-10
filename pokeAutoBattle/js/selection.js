@@ -5,6 +5,7 @@ let pokemon3 = null;
 let validChoice1 = false;
 let validChoice2 = false;
 let validChoice3 = false;
+let playerChoice = null;
 let regionType = 'national';
 
 // jQ objects
@@ -12,6 +13,7 @@ $card1 = $('#card1')
 $card2 = $('#card2')
 $card3 = $('#card3')
 $pokeCard = $('.poke-card')
+$teamPoke = $('.team-poke')
 $selectmenu = $("select-menu")
 
 // fadeIn on load for a nicer effect
@@ -30,4 +32,10 @@ console.log(pokemon1)
 generatePokeCard(pokemon1, '#card1');
 generatePokeCard(pokemon2, '#card2');
 generatePokeCard(pokemon3, '#card3');
-$pokeCard.click((evt) => console.log(evt))
+
+// $(evt.target).closest('.poke-card') gets the div that was clicked
+$pokeCard.click(function (evt) {
+    let $selection = $(evt.target).closest('.poke-card');
+    let h = $selection.height();
+    let w = $selection.width();
+});

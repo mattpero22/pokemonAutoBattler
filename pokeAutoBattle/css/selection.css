@@ -87,11 +87,11 @@ body > #player-team {
 
 #your-team-lbl {
     width: 100%;
-    margin: 3px;
-    background-color: white;
+    margin: 3px;;
     border-radius: 5px;
     border: 2px solid;
     text-align: center;
+    background-color: lavender;
 }
 
 .team-poke {
@@ -102,6 +102,10 @@ body > #player-team {
     max-height: 100px;
     background-color: lavender;
     margin: 5px;
+}
+
+.inactive {
+    background-color: rgba(0,0,0,0);
 }
 
 @media screen and (max-width: 600px) {
