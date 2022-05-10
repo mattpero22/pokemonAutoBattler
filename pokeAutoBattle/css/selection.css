@@ -11,15 +11,19 @@
     .poke-card>img {
         width: 50%;
     }
+    .team-poke {
+        font-size: 6px;
+    }
 }
 
 body {
     background-image: url("./images/forest.png");
     background-size: cover;
-    height: 100vh;
+    height:100vh;
     font-family: 'pokemonFont';
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 #select-menu {
@@ -32,30 +36,56 @@ body {
     display: flex;
     flex-direction: column;
     width: 200px;
-    background-color: rgba(181, 213, 239, 0.75);;
+    background-color: rgba(181, 213, 239, 0.75);
     padding: 10px;
     border-radius: 25px;
-    border: 2px solid gold;
+    border: 2px solid black;
     transition: transform .2s;
 }
 
 .poke-card:hover {
     -ms-transform: scale(1.1); /* IE 9 */
     -webkit-transform: scale(1.1); /* Safari 3-8 */
-    transform: scale(1.1); 
+    transform: scale(1.1);
+    background-color: rgba(181, 213, 239, 0.90);;
   }
 
-.poke-card>img{
+.poke-card>img {
     width: 80%;
+    display: block;
+    align-items: center;
     max-width: 200px;
     max-height: 200px;;
 }
 
-.poke-card>p{
+.poke-card>p {
     margin: 0;
 }
 
 .type {
     border-radius: 5px;
     text-align: center;
+}
+
+#player-team {
+    display: flex;
+    justify-content: space-around;
+    height: 22vh;
+    background-color: rgba(181, 213, 239, 0.90);
+    border: 3px solid black;
+}
+
+.team-poke {
+    border: 2px solid black;
+    width: 15vw;
+    background-color: lavender;
+    margin: 5px;
+}
+
+.inactive {
+    background-color: rgba(0,0,0,.5);
+}
+
+#your-team-lbl {
+    width: 150px;
 }
