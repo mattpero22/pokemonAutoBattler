@@ -13,22 +13,6 @@
     }
 }
 
-@media screen and (max-width: 4100px) {
-    .poke-card {
-        width: 500px;
-    }
-}
-
-.loading {
-    background-image: url("https://i.imgur.com/BwTs7q9.gif");
-    background-size: auto;
-}
-
-.loaded {
-    background-image: url("./images/forest.png");
-    background-size: cover;
-}
-
 body {
     background-image: url("./images/forest.png");
     background-size: cover;
@@ -51,8 +35,15 @@ body {
     background-color: rgba(181, 213, 239, 0.75);;
     padding: 10px;
     border-radius: 25px;
-    border: 2px solid gold
+    border: 2px solid gold;
+    transition: transform .2s;
 }
+
+.poke-card:hover {
+    -ms-transform: scale(1.1); /* IE 9 */
+    -webkit-transform: scale(1.1); /* Safari 3-8 */
+    transform: scale(1.1); 
+  }
 
 .poke-card>img{
     width: 80%;
