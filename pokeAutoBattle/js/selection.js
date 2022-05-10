@@ -9,6 +9,7 @@ let playerChoice = null;
 let regionType = 'national';
 
 // jQ objects
+$body = $('body')
 $card1 = $('#card1')
 $card2 = $('#card2')
 $card3 = $('#card3')
@@ -35,7 +36,9 @@ generatePokeCard(pokemon3, '#card3');
 
 // $(evt.target).closest('.poke-card') gets the div that was clicked
 $pokeCard.click(function (evt) {
-    let $selection = $(evt.target).closest('.poke-card');
-    let h = $selection.height();
-    let w = $selection.width();
+    $('.poke-card').css({backgroundColor: '#b5d5efe6'});
+    $(evt.target).closest('.poke-card').css({backgroundColor: '#8dd9a1'});
+    console.log($(evt.target).closest('.poke-card')[0])
+    playerChoice = $(evt.target).closest('.poke-card')[0].querySelector('h3').innerText
+    console.log(playerChoice)
 });
