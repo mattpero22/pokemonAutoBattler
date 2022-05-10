@@ -25,14 +25,14 @@ const typeColor = {
     fighting:   "#914D34",
     poison:   "#945BBA",
     ground:   "#CC8B4E",
-    flying:   "#ACCEE8",
+    flying:   "#8bdaf7",
     psychic:   "#E68ED1",
     bug:   "#CAE366",
     rock:  "#7d5419",
     ghost:   "#9F74DB",
-    dark:   "#5A5461",
+    dark:   "#6b6770",
     dragon: "#6437DE",
-    steel: "#9692A1",
+    steel: "#c2c8d1",
     fairy: "#EDB9E4",
 }
 
@@ -107,6 +107,7 @@ function getValidPokemonChoice(region) {
 
 // generate pokemon selection card
 function generatePokeCard(pokemon, div){
+    let totalStats = 0;
     $div = $(div);
     $div.append(
         `<h2>${pokemon.name}</h2s>`,
@@ -114,5 +115,9 @@ function generatePokeCard(pokemon, div){
     );
     pokemon.types.forEach((type) => $div.append($(`<p class=type>${type.type.name}</p>`).css({backgroundColor: typeColor[type.type.name]})));
     if (pokemon.types.length == 1) $div.last().append('<br>');
-    pokemon.stats.forEach((stat) => $div.append(`<p>${stat.base_stat} ${statsAbbr[stat.stat.name]}</p>`));
-}
+    pokemon.stats.forEach(function (stat) {
+        $div.append(`<p>${stat.base_stat} ${statsAbbr[stat.stat.name]}</p>`) 
+        totalStats += stat.base_stat;
+    });
+    $div.append(`<p>${totalStats} <strong>TOTAL</strong></p>`)
+}   

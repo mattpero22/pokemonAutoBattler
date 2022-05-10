@@ -35,6 +35,10 @@ body {
     display: flex;
     flex-direction: column;
     width: 200px;
+    background-color: rgba(181, 213, 239, 0.75);;
+    padding: 10px;
+    border-radius: 25px;
+    border: 2px solid gold
 }
 
 .poke-card>img{
