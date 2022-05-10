@@ -41,8 +41,12 @@ let ultraBeasts =["nihilego","buzzwole","pheromosa","xurkitree","celesteela","ka
 
 // Function to change screen
 function fadeScreen() {
-    $('body').fadeOut(0)
+    $('body').fadeOut(5)
     $('body').fadeIn(1000)
+}
+
+function loadScreen() {
+    
 }
 
 // Function to retrieve a pokemon by number and store as a obj
@@ -93,7 +97,6 @@ function getValidPokemonChoice(region) {
         let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);             // get the pokemon species object
         console.log(pokemon.name)
         if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic
-            console.log(ultraBeasts.includes(pokemon.name))
             if(ultraBeasts.includes(pokemon.name) === false){
                 let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);//if it isnt, get the pokemons evolution chain object
                 if(pokeEvoChain.chain.species.name === pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
@@ -105,12 +108,12 @@ function getValidPokemonChoice(region) {
     }
 }
 
-// generate pokemon selection card
+// generate pokemon selection card contents and add event listener
 function generatePokeCard(pokemon, div){
     let totalStats = 0;
     $div = $(div);
     $div.append(
-        `<h2>${pokemon.name}</h2s>`,
+        `<h3 class=.poke-name>${pokemon.name}</h2s>`,
         `<img src="${pokemon.sprites.front_default}"/>`,
     );
     pokemon.types.forEach((type) => $div.append($(`<p class=type>${type.type.name}</p>`).css({backgroundColor: typeColor[type.type.name]})));

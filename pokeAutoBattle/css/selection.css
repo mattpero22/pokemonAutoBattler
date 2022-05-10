@@ -3,17 +3,30 @@
     src: url("./fonts/Pokemon\ Classic.ttf");
 }
 
-@media screen and (max-width: 775px) {
-    #select-menu>h2 {
-        font-size: 1px;
-        background-color: red;
+@media screen and (max-width: 450px) {
+    .poke-card {
+        width: 120px;
+        font-size: 10px;
+    }
+    .poke-card>img {
+        width: 50%;
+    }
+}
 
+@media screen and (max-width: 4100px) {
+    .poke-card {
+        width: 500px;
     }
 }
 
 .loading {
     background-image: url("https://i.imgur.com/BwTs7q9.gif");
     background-size: auto;
+}
+
+.loaded {
+    background-image: url("./images/forest.png");
+    background-size: cover;
 }
 
 body {
