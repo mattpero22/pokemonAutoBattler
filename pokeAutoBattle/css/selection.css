@@ -13,6 +13,7 @@
     }
     .team-poke {
         font-size: 6px;
+        width: 50%;
     }
 }
 
@@ -69,8 +70,9 @@ body {
 
 #player-team {
     display: flex;
-    justify-content: space-around;
-    height: 22vh;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    height: 20vh;
     background-color: rgba(181, 213, 239, 0.90);
     border: 3px solid black;
 }
@@ -88,4 +90,23 @@ body {
 
 #your-team-lbl {
     width: 150px;
+    margin: 0px;
+    margin-top: auto;
+    background-color: white;
+    border-radius: 5px;
+    border: 3px solid;
+    text-align: center;
+}
+
+#user-feedback {
+    display: flex;
+    justify-content: space-between;
+    width: 100vw;
+}
+
+#return2menu-btn{
+    border-radius: 10px;
+    border: 2px solid black;
+    margin-right: 10px;
+    font-family: 'pokemonFont';
 }

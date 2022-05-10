@@ -10,21 +10,24 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous" defer></script>
     <script src="./js/selection.js" defer></script>
     <script src="./js/pabFunctions.js"></script>
-    <title>Pokemon Grab w AJAX</title>
+    <title>Pokemon Auto Battle</title>
 </head>
 
 <body>
     <div id="user-feedback">
         <h1 id="main-title">Choose your pokemon:</h1>
-        <input />
+        <input id="return2menu-btn" type="button" value="BACK TO MENU"/>
     </div>
     <div id="select-menu">
         <div class="poke-card" id="card1"></div>
         <div class="poke-card" id="card2"></div>
         <div class="poke-card" id="card3"></div>
     </div>
-    <p id="your-team-lbl">Your team</p>
-    <div id="player-team" class=".poke-team"> <p id="your-team-lbl">Your team</p>
+    <div id="team-label">
+        <p id="your-team-lbl">Your team</p>
+    </div>
+    
+    <div id="player-team" class=".poke-team"> 
         <div id="team1" class="team-poke" class="inactive">poke1</div>
         <div id="team2" class="team-poke" class="inactive">poke2</div>
         <div id="team3" class="team-poke" class="inactive">poke3</div>

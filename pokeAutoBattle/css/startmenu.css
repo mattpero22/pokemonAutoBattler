@@ -14,6 +14,10 @@ body {
     text-align: center;
 }
 
+.day {
+    background-image: url("./images/forest.png");
+}
+
 #logo {
     align-items: center;
     padding-right: 25px;

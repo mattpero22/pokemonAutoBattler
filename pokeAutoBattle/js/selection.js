@@ -15,7 +15,7 @@ $selectmenu = $("select-menu")
 
 // fadeIn on load for a nicer effect
 $(window).on('load', fadeScreen())
-$('#main-title').append('<input id="back-btn type="button" value="whoops"/>').click(()=>location.href="./index.html")
+$('#return2menu-btn').click(()=>location.href="./index.html")
 
 // get the highest allowed number for the pokemon and then get 3 randomly
 pokemon1 = getValidPokemonChoice(regionType);
