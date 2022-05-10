@@ -106,7 +106,7 @@ body > #player-team {
 
 @media screen and (max-width: 600px) {
     body{
-        justify-content: space-around;
+        justify-content: space-evenly;
         row-gap: 10px;
     }
     body > #user-feedback{
@@ -137,7 +137,7 @@ body > #player-team {
         font-size: 6px;
     }
     #player-team{
-        max-width: 66%;
+        width: 66%;
     }
     #your-team-lbl{
         font-size: 6px;
@@ -146,7 +146,8 @@ body > #player-team {
 
 @media screen and (max-width: 900px) and (min-width: 601px){
     #player-team {
-        max-width:60%;
+        width:60%;
+        max-width: 455px;
     }
     #user-feedback > h1{
         font-size: 20px; 
@@ -157,9 +158,10 @@ body > #player-team {
     }
 }
 
-@media screen and (max-width: 1500px) and (min-width: 901px){
+@media screen and (max-width: 1200px) and (min-width: 901px){
     #player-team {
-        max-width: 67%;
+        width: 60%;
+        max-width: 455px;
     }
     #user-feedback > h1{
         font-size: 20px; 
