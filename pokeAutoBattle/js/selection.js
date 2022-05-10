@@ -38,7 +38,5 @@ generatePokeCard(pokemon3, '#card3');
 $pokeCard.click(function (evt) {
     $('.poke-card').css({backgroundColor: '#b5d5efe6'});
     $(evt.target).closest('.poke-card').css({backgroundColor: '#8dd9a1'});
-    console.log($(evt.target).closest('.poke-card')[0])
     playerChoice = $(evt.target).closest('.poke-card')[0].querySelector('h3').innerText
-    console.log(playerChoice)
 });

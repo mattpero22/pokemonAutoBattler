@@ -98,11 +98,14 @@ function getValidPokemonChoice(region) {
         console.log(pokemon.name)
         if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic
             if(ultraBeasts.includes(pokemon.name) === false){
+                validChoice = true
                 let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);//if it isnt, get the pokemons evolution chain object
-                if(pokeEvoChain.chain.species.name === pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
-                    validChoice = true;
+                if(pokeEvoChain.chain.species.name == pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
                     return pokemon
-                } 
+                } else {
+                    pokemon = getPokemonByName(pokeEvoChain.chain.species.name)
+                    return pokemon
+                }
             }
         }
     }
