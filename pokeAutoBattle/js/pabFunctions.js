@@ -111,7 +111,7 @@ function getValidPokemonChoice(region) {
     }
 }
 
-// generate pokemon selection card contents and add event listener
+// generate pokemon selection card contents and event listener
 function generatePokeCard(pokemon, div){
     let totalStats = 0;
     $div = $(div);
@@ -127,5 +127,8 @@ function generatePokeCard(pokemon, div){
     });
     $div.append(`<p>${totalStats} <strong>TOTAL</strong></p>`)
 }
+
+// add a pokemon to the player's teams
+
 
 // generate a pokemon team card

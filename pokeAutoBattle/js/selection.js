@@ -21,6 +21,9 @@ $selectmenu = $("select-menu")
 $(window).on('load', fadeScreen())
 $('#return2menu-btn').click(()=>location.href="./index.html")
 
+eevee = getPokemonByName('eevee'),
+eeveeSpec = getPokemonSpeciesByURL(eevee.species.url)
+console.log(getPokemonEvoChainByURL(eeveeSpec.evolution_chain.url))
 // get the highest allowed number for the pokemon and then get 3 randomly
 pokemon1 = getValidPokemonChoice(regionType);
 pokemon2 = getValidPokemonChoice(regionType);
@@ -40,3 +43,5 @@ $pokeCard.click(function (evt) {
     $(evt.target).closest('.poke-card').css({backgroundColor: '#8dd9a1'});
     playerChoice = $(evt.target).closest('.poke-card')[0].querySelector('h3').innerText
 });
+
+$('#confirm-btn').click((playerChoice) => addPokemonToTeam(playerChoice))
