@@ -119,10 +119,17 @@ body {
 }
 
 .selectmenu-btn:hover {
-    -ms-transform: scale(1.1); /* IE 9 */
-    -webkit-transform: scale(1.1); /* Safari 3-8 */
     transform: scale(1.1);
 }
+
+#control-btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+ #control-btns>input {
+    margin: 5px;
+ }
 
 #return2menu-btn {
     background-color: rgba(231, 94, 94, 0.716);
