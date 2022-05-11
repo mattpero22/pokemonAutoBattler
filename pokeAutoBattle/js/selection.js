@@ -21,12 +21,11 @@ $selectmenu = $("select-menu")
 $(window).on('load', fadeScreen())
 $('#return2menu-btn').click(()=>location.href="./index.html")
 
-// get local storage
+// get and set local storage
 let playerTeam = localStorage.getItem('playerTeam') || [];
-console.log(typeof playerTeam)
 let numWins = parseInt(localStorage.getItem('wins')) || 0;
-console.log(numWins)
 let active = localStorage.getItem('active') || true;
+let pokeAdded = localStorage.getItem('pokeAdd') || false;
 
 // eevee = getPokemonByName('eevee'),
 // eeveeSpec = getPokemonSpeciesByURL(eevee.species.url)
@@ -46,6 +45,7 @@ generatePokeCard(pokemon3, '#card3');
 
 // $(evt.target).closest('.poke-card') gets the div that was clicked
 $pokeCard.click(function (evt) {
+    if (pokeAdded === true) $pokeCard.off("click")
     $('.poke-card').css({backgroundColor: '#b5d5efe6'});
     $(evt.target).closest('.poke-card').css({backgroundColor: '#8dd9a1'});
     playerChoice = $(evt.target).closest('.poke-card')[0].querySelector('h3').innerText
@@ -53,11 +53,17 @@ $pokeCard.click(function (evt) {
 
 $('#confirm-btn').click(function() {
     let temp = []
-    if (playerTeam.length === 0) temp.push(playerChoice)
+    if (playerChoice === null) return
+    else if (playerTeam.length === 6) return
+    else if (pokeAdded === true) return
     else {
-        temp = playerTeam.split()
-        console.log(temp)
-        temp.push(playerChoice)
+        if (playerTeam.length === 0) temp.push(playerChoice)
+        else {
+            temp = playerTeam.split()
+            console.log(temp)
+            temp.push(playerChoice)
+        }
+        localStorage.setItem("playerTeam", temp)
+        localStorage.setItem("pokeAdded", true);
     }
-    localStorage.setItem("playerTeam", temp)
 })

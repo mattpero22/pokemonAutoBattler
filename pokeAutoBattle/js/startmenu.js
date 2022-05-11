@@ -36,5 +36,3 @@ $themeBtn.click(function(){
         $body.fadeIn(1000)
     })
 })
-
-
