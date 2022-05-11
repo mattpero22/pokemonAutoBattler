@@ -21,15 +21,19 @@ $selectmenu = $("select-menu")
 $(window).on('load', fadeScreen())
 $('#return2menu-btn').click(()=>location.href="./index.html")
 
-eevee = getPokemonByName('eevee'),
-eeveeSpec = getPokemonSpeciesByURL(eevee.species.url)
-console.log(getPokemonEvoChainByURL(eeveeSpec.evolution_chain.url))
+// get local storage
+let playerTeam = localStorage.getItem('playerTeam')
+let numWins = localStorage.getItem('wins')
+
+// eevee = getPokemonByName('eevee'),
+// eeveeSpec = getPokemonSpeciesByURL(eevee.species.url)
+// console.log(getPokemonEvoChainByURL(eeveeSpec.evolution_chain.url))
 // get the highest allowed number for the pokemon and then get 3 randomly
 pokemon1 = getValidPokemonChoice(regionType);
 pokemon2 = getValidPokemonChoice(regionType);
 pokemon3 = getValidPokemonChoice(regionType);
 //console.log(pokemon1.name, pokemon2.name, pokemon3.name)
-console.log(pokemon1)
+// console.log(pokemon1)
 // console.log(pokemon2)
 // console.log(pokemon3)
 
@@ -44,4 +48,7 @@ $pokeCard.click(function (evt) {
     playerChoice = $(evt.target).closest('.poke-card')[0].querySelector('h3').innerText
 });
 
-$('#confirm-btn').click((playerChoice) => addPokemonToTeam(playerChoice))
+$('#confirm-btn').click(function() {
+    playerTeam.push(playerChoice)
+    console.log(playerTeam)
+})

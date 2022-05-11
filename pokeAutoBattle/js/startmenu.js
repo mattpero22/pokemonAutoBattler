@@ -9,6 +9,10 @@ $(window).on('load', fadeScreen())
 
 // if play btn clicked, set it to target firstpick.html
 $playBtn.click(function(){
+    let PABwins = localStorage.getItem("wins") || 0;
+    localStorage.setItem("wins", PABwins)
+    let PABplayerTeam = localStorage.getItem("playerTeam") || [];
+    localStorage.setItem("playerTeam", PABplayerTeam)
     $body.fadeOut(1000, function() {
         location.href = "./selection.html";
     })

@@ -45,10 +45,6 @@ function fadeScreen() {
     $('body').fadeIn(1000)
 }
 
-function loadScreen() {
-    
-}
-
 // Function to retrieve a pokemon by number and store as a obj
 function getPokemonByNum(number) {
     return $.parseJSON($.ajax({ //parse return of ajax.responseText as JSON to get obj back
@@ -127,8 +123,5 @@ function generatePokeCard(pokemon, div){
     });
     $div.append(`<p>${totalStats} <strong>TOTAL</strong></p>`)
 }
-
-// add a pokemon to the player's teams
-
 
 // generate a pokemon team card

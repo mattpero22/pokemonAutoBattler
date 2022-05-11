@@ -1,7 +1,7 @@
 class PabPokemon {
-    constructor (name, id, sprite, type1, type2, growthRate, speciesURL) {
+    constructor (name, id, sprite, type1, type2, growthRate, speciesURL, evolutionURL, hp, totAtk, totDef, speed, card) {
         // data i can get from the api for my game obj
-        this.name = null;
+        this.name = name;
         this.id = null;
         this.sprite = null;
         this.type1 = null;
@@ -13,6 +13,7 @@ class PabPokemon {
         this.atk = 0;
         this.def = 0;
         this.spe = 0;
+        this.card = null;
 
         // data and counters I will be using for my game obj
         this.roundsWithPlayer = 0;
