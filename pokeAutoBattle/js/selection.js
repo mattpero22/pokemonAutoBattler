@@ -31,6 +31,7 @@ let active = localStorage.getItem('active') || true;
 choices.pokemon1 = getValidPokemonChoice(regionType);
 choices.pokemon2 = getValidPokemonChoice(regionType);
 choices.pokemon3 = getValidPokemonChoice(regionType);
+console.log(choices.pokemon1)
 
 // create the cards the user can interact with
 generatePokeCard(choices.pokemon1, '#card1');
@@ -57,5 +58,10 @@ $('#confirm-btn').on("click", function() {
         }
         localStorage.setItem('playerTeam', temp)
         localStorage.setItem('pokeAdded', true)
+        temp.forEach(function(name) {
+            let teamPoke = getPokemonByName(name)
+            console.log(teamPoke)
+            $(".inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`)
+        })
     }
 })
