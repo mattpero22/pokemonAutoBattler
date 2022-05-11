@@ -22,8 +22,11 @@ $(window).on('load', fadeScreen())
 $('#return2menu-btn').click(()=>location.href="./index.html")
 
 // get local storage
-let playerTeam = localStorage.getItem('playerTeam')
-let numWins = localStorage.getItem('wins')
+let playerTeam = localStorage.getItem('playerTeam') || [];
+console.log(typeof playerTeam)
+let numWins = parseInt(localStorage.getItem('wins')) || 0;
+console.log(numWins)
+let active = localStorage.getItem('active') || true;
 
 // eevee = getPokemonByName('eevee'),
 // eeveeSpec = getPokemonSpeciesByURL(eevee.species.url)
@@ -49,6 +52,7 @@ $pokeCard.click(function (evt) {
 });
 
 $('#confirm-btn').click(function() {
-    playerTeam.push(playerChoice)
-    console.log(playerTeam)
+    if (playerTeam.length === 0) playerTeam = playerChoice
+    else playerTeam.push(playerChoice)
+    localStorage.setItem("playerTeam", playerChoice)
 })

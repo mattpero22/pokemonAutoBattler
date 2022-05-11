@@ -125,3 +125,11 @@ function generatePokeCard(pokemon, div){
 }
 
 // generate a pokemon team card
+function prepareGame() {
+    localStorage.clear();
+    let PABwins = localStorage.getItem("wins") || 0;
+    let PABplayerTeam = localStorage.getItem("playerTeam") || [];
+    localStorage.setItem("wins", PABwins)
+    localStorage.setItem("playerTeam", PABplayerTeam)
+    localStorage.setItem("active", true)
+}
