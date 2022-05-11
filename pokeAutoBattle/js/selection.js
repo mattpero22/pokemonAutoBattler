@@ -1,11 +1,13 @@
 // game variables
-let pokemon1 = null;
-let pokemon2 = null;
-let pokemon3 = null;
+choices = {
+    pokemon1: null,
+    pokemon2: null,
+    pokemon3: null,
+    playerChoice: null,
+}
 let validChoice1 = false;
 let validChoice2 = false;
 let validChoice3 = false;
-let playerChoice = null;
 let regionType = 'national';
 
 // jQ objects
@@ -22,48 +24,52 @@ $(window).on('load', fadeScreen())
 $('#return2menu-btn').click(()=>location.href="./index.html")
 
 // get and set local storage
-let playerTeam = localStorage.getItem('playerTeam') || [];
+let playerTeam = localStorage.getItem('playerTeam') || []
 let numWins = parseInt(localStorage.getItem('wins')) || 0;
 let active = localStorage.getItem('active') || true;
-let pokeAdded = localStorage.getItem('pokeAdd') || false;
+let pokeAdded = localStorage.getItem('pokeAdded') || false;
 
-// eevee = getPokemonByName('eevee'),
-// eeveeSpec = getPokemonSpeciesByURL(eevee.species.url)
-// console.log(getPokemonEvoChainByURL(eeveeSpec.evolution_chain.url))
-// get the highest allowed number for the pokemon and then get 3 randomly
-pokemon1 = getValidPokemonChoice(regionType);
-pokemon2 = getValidPokemonChoice(regionType);
-pokemon3 = getValidPokemonChoice(regionType);
-//console.log(pokemon1.name, pokemon2.name, pokemon3.name)
-// console.log(pokemon1)
-// console.log(pokemon2)
-// console.log(pokemon3)
+// get the highest allowed number for the pokemon and then get 3 randomly that are first evo or only evo
+choices.pokemon1 = getValidPokemonChoice(regionType);
+choices.pokemon2 = getValidPokemonChoice(regionType);
+choices.pokemon3 = getValidPokemonChoice(regionType);
 
-generatePokeCard(pokemon1, '#card1');
-generatePokeCard(pokemon2, '#card2');
-generatePokeCard(pokemon3, '#card3');
+// create the cards the user can interact with
+generatePokeCard(choices.pokemon1, '#card1');
+generatePokeCard(choices.pokemon2, '#card2');
+generatePokeCard(choices.pokemon3, '#card3');
 
-// $(evt.target).closest('.poke-card') gets the div that was clicked
-$pokeCard.click(function (evt) {
-    if (pokeAdded === true) $pokeCard.off("click")
+$pokeCard.on("click", function (evt) {
     $('.poke-card').css({backgroundColor: '#b5d5efe6'});
     $(evt.target).closest('.poke-card').css({backgroundColor: '#8dd9a1'});
-    playerChoice = $(evt.target).closest('.poke-card')[0].querySelector('h3').innerText
+    choices.playerChoice = getPokemonByName($(evt.target).closest('.poke-card')[0].querySelector('h3').innerText)
 });
 
-$('#confirm-btn').click(function() {
+// event listener for the confirm button
+$('#confirm-btn').on("click", function() {
     let temp = []
-    if (playerChoice === null) return
-    else if (playerTeam.length === 6) return
-    else if (pokeAdded === true) return
-    else {
-        if (playerTeam.length === 0) temp.push(playerChoice)
+    console.log(choices.playerChoice)
+    if (choices.playerChoice === null) console.log("player choice is null", playerChoice)
+    else if (localStorage.getItem("pokeAdded") === 'true') console.log("a pokemon was already confirmed this turn")
+    else if (playerTeam){
+        console.log(playerTeam)
+        temp = playerTeam.split(",")
+        if (temp.length === 6) console.log("team is at max length", playerTeam)
         else {
-            temp = playerTeam.split()
-            console.log(temp)
-            temp.push(playerChoice)
+            newTeamPokemon = new PabPokemon(choices.playerChoice)
+            console.log(newTeamPokemon)
+            if (playerTeam.length === 0) temp.push(choices.playerChoice.name)
+            else {
+                temp = playerTeam.split(',')
+                temp.push(playerChoice)
+            }
+            localStorage.setItem("playerTeam", temp);
+            localStorage.setItem("pokeAdded", true);
+            $('#confirm-btn').off("click");
+
+            // add pokemon imgcard to team
+            generatePokeTeamCard()
+            // add battle button to selection page which will take you to the battle page
         }
-        localStorage.setItem("playerTeam", temp)
-        localStorage.setItem("pokeAdded", true);
     }
 })

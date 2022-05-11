@@ -124,6 +124,13 @@ function generatePokeCard(pokemon, div){
     $div.append(`<p>${totalStats} <strong>TOTAL</strong></p>`)
 }
 
+function generatePokeTeamCard(pokemon, teamDiv){
+    let $teamDiv = $(teamDiv);
+
+}
+
+
+
 // generate a pokemon team card
 function prepareGame() {
     localStorage.clear();

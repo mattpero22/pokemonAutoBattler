@@ -1,10 +1,10 @@
 class PabPokemon {
-    constructor (name, id, sprite, type1, type2, growthRate, speciesURL, evolutionURL, hp, totAtk, totDef, speed, card) {
+    constructor (pokemonObj) {
         // data i can get from the api for my game obj
-        this.name = name;
-        this.id = null;
-        this.sprite = null;
-        this.type1 = null;
+        this.name = pokemonObj.name;
+        this.id = pokemonObj.id;
+        this.sprite = pokemonObj.sprites.front_default;
+        this.type1 = this.getType1(pokemonObj);
         this.type2 = null;
         this.growthRate = null;
         this.speciesURL = null;
@@ -20,5 +20,12 @@ class PabPokemon {
         this.timesEvolvedWithPlayer = 0;
         this.move1 = null;
         this.move2 = null;
+    }
+
+    getType1(pokemonObj) {
+        if (pokemonObj.types[0]) return pokemonObj.types[0].type.name
+    }
+    getType2(pokemonObj) {
+        if (pokemonObj.types[1]) return pokemonObj.types[1].type.name
     }
 }
