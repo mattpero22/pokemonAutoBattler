@@ -29,10 +29,3 @@ $playBtn.on('click', function(){
         $body.fadeOut(1000, function() {location.href = "./selection.html";})
     })
 })
-
-$themeBtn.click(function(){
-    $body.fadeOut(1000, function(){
-        $body.css("background-image", "url(./css/images/night.jpg)")
-        $body.fadeIn(1000)
-    })
-})
