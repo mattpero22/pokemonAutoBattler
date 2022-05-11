@@ -13,9 +13,9 @@ $playBtn.on('click', function(){
     let PABactive = localStorage.getItem("active");
     if (PABactive) {
         $('#startmenu-btns')
-            .append('<p>Previous game detected. Would you like to continue?</p>')
             .append('<input id="continue" type="button" class="startmenu-btn" value="CONTINUE"/>')
             .append('<input id="reset" type="button" class="startmenu-btn" value="NEW GAME"/>')
+            .append('<h3>Previous game detected. Would you like to continue?</h3>')
     } else {
         prepareGame();
         $body.fadeOut(1000, function() {location.href = "./selection.html"; }) 

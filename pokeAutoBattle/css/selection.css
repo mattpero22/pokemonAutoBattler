@@ -103,6 +103,7 @@ body {
 .team-poke>img {
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .inactive {
@@ -127,6 +128,7 @@ body {
     flex-direction: column;
     justify-content: center;
 }
+
  #control-btns>input {
     margin: 5px;
  }
