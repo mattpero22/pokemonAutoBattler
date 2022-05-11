@@ -52,7 +52,12 @@ $pokeCard.click(function (evt) {
 });
 
 $('#confirm-btn').click(function() {
-    if (playerTeam.length === 0) playerTeam = playerChoice
-    else playerTeam.push(playerChoice)
-    localStorage.setItem("playerTeam", playerChoice)
+    let temp = []
+    if (playerTeam.length === 0) temp.push(playerChoice)
+    else {
+        temp = playerTeam.split()
+        console.log(temp)
+        temp.push(playerChoice)
+    }
+    localStorage.setItem("playerTeam", temp)
 })

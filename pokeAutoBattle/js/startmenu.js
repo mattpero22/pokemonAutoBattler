@@ -11,12 +11,11 @@ $(window).on('load', fadeScreen())
 $playBtn.on('click', function(){
     $playBtn.off("click")
     let PABactive = localStorage.getItem("active");
-    let PABwins = localStorage.getItem("wins");
-    if (PABactive && PABwins > 0) {
+    if (PABactive) {
         $('#startmenu-btns')
             .append('<p>Previous game detected. Would you like to continue?</p>')
-            .append('<input id="continue" type="button" class="startmenu-btn" value="Y"/>')
-            .append('<input id="reset" type="button" class="startmenu-btn" value="N"/>')
+            .append('<input id="continue" type="button" class="startmenu-btn" value="CONTINUE"/>')
+            .append('<input id="reset" type="button" class="startmenu-btn" value="NEW GAME"/>')
     } else {
         prepareGame();
         $body.fadeOut(1000, function() {location.href = "./selection.html"; }) 
@@ -27,6 +26,7 @@ $playBtn.on('click', function(){
     })
     $('#reset').on("click", function(){
         prepareGame();
+        $body.fadeOut(1000, function() {location.href = "./selection.html";})
     })
 })
 
