@@ -90,13 +90,19 @@ body {
 }
 
 .team-poke {
+    display: flex;
+    flex-direction: column;
     border: 2px solid black;
     width: 15vw;
     height: 15vw;
     max-width: 100px;
     max-height: 100px;
-    background-color: lavender;
     margin: 5px;
+}
+
+.team-poke>img {
+    justify-content: center;
+    align-items: center;
 }
 
 .inactive {

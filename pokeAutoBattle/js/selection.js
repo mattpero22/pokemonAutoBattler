@@ -61,7 +61,7 @@ $('#confirm-btn').on("click", function() {
         temp.forEach(function(name) {
             let teamPoke = getPokemonByName(name)
             console.log(teamPoke)
-            $(".inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`)
+            $(".inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`).removeClass('inactive')
         })
     }
 })
