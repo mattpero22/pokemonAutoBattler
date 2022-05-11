@@ -121,7 +121,7 @@ function generatePokeCard(pokemon, div){
         $div.append(`<p>${stat.base_stat} ${statsAbbr[stat.stat.name]}</p>`) 
         totalStats += stat.base_stat;
     });
-    $div.append(`<p>${totalStats} <strong>TOTAL</strong></p>`)
+    $div.append(`<p>${totalStats} TOTAL</p>`)
 }
 
 function generatePokeTeamCard(pokemon, teamDiv){
