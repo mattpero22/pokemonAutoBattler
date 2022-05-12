@@ -189,8 +189,7 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     // PRE BATTLE
     prepPlayerPokemonTeam(playerTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
     prepOppPokemonTeam(oppTeam, currentWins)
-    let coinFlip = Math.floor(Math.random() * 2)
-    $('combat-log').append(``)
+    let firstMove = coinFlip();
 
     // BATTLE
 
@@ -223,6 +222,17 @@ function prepOppPokemonTeam (team, currentWins) {
         poke.spe += additionalStats
     })
     $('#combat-log').append(`<p>Pokemon on the opp. team gained ${additionalStats} in all stats...</p>`)
+}
+
+function coinFlip() {
+    let coinFlip = Math.floor(Math.random() * 2)
+    if (coinFlip) { 
+        $('#combat-log').append(`<p>Player goes first</p>`)
+        return 'player' 
+    } else {
+        $('#combat-log').append(`<p>Opponent goes first</p>`)
+        return 'opp' 
+    }
 }
 
 function postPlayerPokemonTeam (team, currentWins){
