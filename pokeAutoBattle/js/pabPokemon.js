@@ -9,12 +9,11 @@ class PabPokemon {
         //this.growthRate = null;
         this.speciesURL = pokemonObj.species.url;
         this.speciesObj = getPokemonSpeciesByURL(this.speciesURL);
-        this.evolution = this.getNextEvolution(this.speciesObj);
-        this.hp = 0;
-        this.atk = 0;
-        this.def = 0;
-        this.spe = 0;
-        this.card = null;
+        this.evolution = this.getNextEvolution(this.speciesObj, this.name);
+        this.hp = pokemonObj.stats[0].base_stat * 2;
+        this.atk = pokemonObj.stats[1].base_stat + pokemonObj.stats[3].base_stat;
+        this.def = pokemonObj.stats[2].base_stat + pokemonObj.stats[4].base_stat;
+        this.spe = pokemonObj.stats[5].base_stat;
 
         // data and counters I will be using for my game obj
         this.roundsWithPlayer = 0;
@@ -25,19 +24,21 @@ class PabPokemon {
 
     getType1(pokemonObj) {
         if (pokemonObj.types[0]) {
-            console.log(pokemonObj.types[0].type.name)
             return pokemonObj.types[0].type.name
         } 
     }
     getType2(pokemonObj) {
         if (pokemonObj.types[1]) {
-            console.log(pokemonObj.types[1].type.name)
             return pokemonObj.types[1].type.name
         } 
     }
 
-    getNextEvolution(pokeSpeciesURL) {
+    getNextEvolution(pokeSpeciesURL, pokeName) {
         let pokeEvoChain = getPokemonEvoChainByURL(pokeSpeciesURL.evolution_chain.url)
-        return pokeEvoChain.chain.evolves_to[0].species.name
+        if (pokeName === 'eevee'){
+            let randomNumber = Math.floor(Math.random() * 8)
+            return pokeEvoChain.chain.evolves_to[randomNumber].species.name
+        } 
+        if (pokeEvoChain.chain.evolves_to[0]) return pokeEvoChain.chain.evolves_to[0].species.name
     }
 }

@@ -29,6 +29,7 @@ let active = localStorage.getItem('active') || true;
 let maxTeamSize = localStorage.getItem('maxTeamSize' || false);
 
 // get the highest allowed number for the pokemon and then get 3 randomly that are first evo or only evo
+// choices.pokemon1 = getValidPokemonChoice(regionType);
 choices.pokemon1 = getValidPokemonChoice(regionType);
 choices.pokemon2 = getValidPokemonChoice(regionType);
 choices.pokemon3 = getValidPokemonChoice(regionType);
@@ -41,12 +42,11 @@ generatePokeCard(choices.pokemon3, '#card3');
 let pabPoke1 = new PabPokemon(choices.pokemon1)
 let pabPoke2 = new PabPokemon(choices.pokemon2)
 let pabPoke3 = new PabPokemon(choices.pokemon3)
+console.log(choices.pokemon1)
 console.log(pabPoke1)
 console.log(pabPoke2)
 console.log(pabPoke3)
-console.log(choices.pokemon1)
-console.log(choices.pokemon2)
-console.log(choices.pokemon3)
+
 
 displayPlayerTeam();
 if (maxTeamSize === 'true') activateBattle();
