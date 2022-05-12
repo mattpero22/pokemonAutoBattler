@@ -192,6 +192,9 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     let firstMove = coinFlip();
 
     // BATTLE
+    while (battleActive) {
+        battleActive = false
+    }
 
 
     // POST BATTLE

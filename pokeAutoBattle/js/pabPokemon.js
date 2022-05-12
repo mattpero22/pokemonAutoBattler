@@ -20,6 +20,7 @@ class PabPokemon {
         this.evolutionsWithPlayer = 1;
         this.move1 = null;
         this.move2 = null;
+        this.currentHP = this.hp;
     }
 
     getType1(pokemonObj) {
