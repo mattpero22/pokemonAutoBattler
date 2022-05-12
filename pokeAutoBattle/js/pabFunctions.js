@@ -193,6 +193,9 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
 
     // BATTLE
     while (battleActive) {
+        performBasicAttack(speedOrderPlayerTeam[0], oppTeam[0])
+        performBasicAttack(speedOrderPlayerTeam[1], oppTeam[0])
+        performBasicAttack(speedOrderPlayerTeam[2], oppTeam[0])
         battleActive = false
     }
 
@@ -256,4 +259,12 @@ function savePlayerTeamToLocal(playerTeam) {
         localStorage.setItem(`pabPoke${i}`, JSON.stringify(pokemon))
         i += 1
     })
+}
+
+function performBasicAttack(attacker, defender) {
+    let atk = attacker.atk;
+    let def = defender.def;
+    let power = 20;
+    let dmg = Math.floor((power * (atk/def)));
+    $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
 }
