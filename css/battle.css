@@ -28,7 +28,8 @@ body {
     flex-direction: column;
     border-radius: 10px;
     background-color: rgba(245, 245, 245, 0.67);
-    font-size: 12px
+    font-size: 12px;
+    overflow-y: scroll;
 }
 
 #combat-log>p {
@@ -83,6 +84,13 @@ body {
     width: 100%;
 }
 
+.team-poke>p {
+    text-align: center;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    border: 2px black solid;
+}
+
 .inactive {
     background-color: rgba(0,0,0,0);
 }
@@ -100,3 +108,4 @@ body {
 .battle-btn:hover {
     transform: scale(1.1);
 }
+

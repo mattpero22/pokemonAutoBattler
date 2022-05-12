@@ -86,16 +86,16 @@ function getPokemonEvoChainByURL(evoChainURL) {
 
 // Get valid choice pokemon
 function getValidPokemonChoice(region) {
-    let validChoice = false;                                                    // hard exit condition to enter while loop
-    pokemonRange = getPokedexByRegion(region).pokemon_entries.length;           // gets max number allowed
-    while (validChoice === false) {                                             // enter while loop
-        let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));// get a pokemon object 
-        let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);             // get the pokemon species object
-        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic
+    let validChoice = false;                                                        // hard exit condition to enter while loop
+    pokemonRange = getPokedexByRegion(region).pokemon_entries.length;               // gets max number allowed
+    while (validChoice === false) {                                                 // enter while loop
+        let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));    // get a pokemon object 
+        let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);                 // get the pokemon species object
+        if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {    // check if it is a legendary or mythic
             if(ultraBeasts.includes(pokemon.name) === false){
                 validChoice = true
-                let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);//if it isnt, get the pokemons evolution chain object
-                if(pokeEvoChain.chain.species.name == pokemon.name) {  //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
+                let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);   //if it isnt, get the pokemons evolution chain object
+                if(pokeEvoChain.chain.species.name == pokemon.name) {       //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
                     return pokemon
                 } else {
                     pokemon = getPokemonByName(pokeEvoChain.chain.species.name)
@@ -139,7 +139,8 @@ function displayPlayerTeam() {
         i += 1;
         let nextPoke = JSON.parse(localStorage.getItem(`pabPoke${i}`))
         userTeam.push(nextPoke)
-        $("#player-team>.inactive:first").append(`<img src="${nextPoke.sprite}"/>`).removeClass('inactive')
+        $("#player-team>.inactive:first")
+            .append(`<img src="${nextPoke.sprite}"/>`).removeClass('inactive')
     })
     return userTeam
 }
@@ -147,6 +148,18 @@ function displayPlayerTeam() {
 function displayOpponentTeam(opponentTeam) {
     opponentTeam.forEach(function(pabPoke){
         $("#enemy-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive')
+    })
+}
+
+function displayPlayerTeamHealth(team) {
+    team.forEach(function (poke) {
+        $("#player-team-health>.inactive:first").append(`<p>${poke.currentHP} / ${poke.hp}</p>`).removeClass('inactive')
+    })
+}
+
+function displayOppTeamHealth(team) {
+    team.forEach(function (poke) {
+        $("#opp-team-health>.inactive:first").append(`<p>${poke.currentHP} / ${poke.hp}</p>`).removeClass('inactive')
     })
 }
 
@@ -190,19 +203,35 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     prepPlayerPokemonTeam(playerTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
     prepOppPokemonTeam(oppTeam, currentWins)
     let firstMove = coinFlip();
+    let playerBattleTeam = playerTeam;
+    let oppBattleTeam = oppTeam;
 
     // BATTLE
     while (battleActive) {
-        performBasicAttack(playerTeam[0], oppTeam[0])
+        let nextAttack = null
+        let playerTurns = 0
+        let oppTurns = 0
+        if (firstMove === null){
 
-        battleActive = false
+        }
+        else if (firstMove === 'player') {
+            basicAttack(playerTeam[playerTurns], oppBattleTeam[Math.floor(Math.random() * oppBattleTeam.length)])
+            playerTurns += 1;
+            nextAttack = 'opp';
+            firstMove = null;
+        } else if (firstMove === 'opp') {
+            basicAttack(oppTeam[oppTurns], playerBattleTeam[Math.floor(Math.random() * playerBattleTeam.length)])
+            oppTurns += 1;
+            nextAttack = 'player'
+            firstMove = null;
+        }
+            battleActive = false
     }
 
 
     // POST BATTLE
     postPlayerPokemonTeam(playerTeam, currentWins)
     savePlayerTeamToLocal(playerTeam)
-    console.log(currentWins)
     localStorage.setItem("wins", currentWins + 1)
     $('#divider').append('<input id="return" class="battle-btn" type="button" value="BATTLE COMPLETE"/>')
     $('#return').css('background-color', 'yellow').on('click', () => location.href="./selection.html")
@@ -264,7 +293,30 @@ function savePlayerTeamToLocal(playerTeam) {
     })
 }
 
-function performBasicAttack(attacker, defender) {
+function attack(attacker) {
+    let randomChoice = Math.floor(Math.random() * 10) 
+    if (attacker.move1 === null && attacker.move2 === null) {
+    }
+}
+
+function basicAttack(attacker, defender) {
+    let atk = attacker.atk;
+    let def = defender.def;
+    let power = 20;
+    let dmg = Math.floor((power * (atk/def)));
+    $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
+    console.log(defender.currentHP)
+}
+
+function move1Attack(attacker, defender) {
+    let atk = attacker.atk;
+    let def = defender.def;
+    let power = 20;
+    let dmg = Math.floor((power * (atk/def)));
+    $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
+}
+
+function move2Attack(attacker, defender) {
     let atk = attacker.atk;
     let def = defender.def;
     let power = 20;

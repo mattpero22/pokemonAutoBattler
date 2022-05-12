@@ -21,6 +21,7 @@ class PabPokemon {
         this.move1 = null;
         this.move2 = null;
         this.currentHP = this.hp;
+        this.fainter = false;
     }
 
     getType1(pokemonObj) {
