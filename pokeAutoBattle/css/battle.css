@@ -28,10 +28,11 @@ body {
     flex-direction: column;
     border-radius: 10px;
     background-color: rgba(245, 245, 245, 0.67);
+    font-size: 12px
 }
 
 #combat-log>p {
-    margin-left: 3px;
+    margin: 3px 3px;
 }
 
 #battle-area {

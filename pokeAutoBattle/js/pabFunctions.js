@@ -106,6 +106,12 @@ function getValidPokemonChoice(region) {
     }
 }
 
+// get a valid choice pokemon for the computer's team
+function getComputerPokemon() {
+    let playerWins = localStorage.getItem("wins")
+    console.log(wins)
+}
+
 // generate pokemon selection card contents and event listener
 function generatePokeCard(pokemon, div){
     let totalStats = 0;
@@ -149,9 +155,8 @@ function activateBattle() {
     })
 }
 
-function generateOpponentTeam(number) {
-    for (i=0; i<number; i++){
-        let nextPoke = getValidPokemonChoice('national');
-        console.log(nextPoke)
-    }
+function generateOpponentTeam(){
+    let playerTeam = localStorage.getItem("playerTeam")
+    playerTeam = playerTeam.split(',')
+    console.log(playerTeam)
 }
