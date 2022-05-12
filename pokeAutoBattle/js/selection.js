@@ -73,3 +73,8 @@ $('#confirm-btn').on("click", function() {
         })
     }
 })
+
+$('#defer-btn').on("click", function() {
+    console.log(localStorage.getItem("playerTeam"))
+    if (localStorage.getItem('playerTeam') !== '') activateBattle();
+})

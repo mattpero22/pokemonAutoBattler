@@ -1,17 +1,84 @@
+@font-face {
+    font-family: 'pokemonFont';
+    src: url("./fonts/Pokemon\ Classic.ttf");
+}
+
 body {
+    font-family: 'pokemonFont';
     background-image: url("./images/battlescene.png");
     background-size: cover;
+    justify-content: space-evenly;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    background-color: slategray;
     height: 100vh;
 }
 
-#battle-grid {
-    display: grid;
-    height: 60%;
-    width: 80%;
+#user-feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 33vw;
+    border: 5px purple solid;
+    height: 100vh;
+}
+
+#combat-log {
+    border: 2px red solid;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    scrollbar-width: thin;
+    scrollbar-color: blue orange;
+    overflow-y: scroll;
+}
+
+#battle-area {
+    display: flex;
+    justify-content: space-between;
     border: 5px solid whitesmoke;
     margin: 10px;
 }
+
+#divider {
+    width: 40vw;
+}
+
+.poke-team {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 66%;
+
+}
+
+.team-lbl {
+    width: 100%;
+    margin: 3px;;
+    border-radius: 5px;
+    border: 2px solid;
+    text-align: center;
+    background-color: lavender;
+}
+
+.team-poke {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    width: 15vw;
+    height: 15vw;
+    max-width: 120px;
+    max-height: 120px;
+    margin: 5px;
+}
+
+.team-poke>img {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.inactive {
+    background-color: rgba(0,0,0,0);
+}
+
