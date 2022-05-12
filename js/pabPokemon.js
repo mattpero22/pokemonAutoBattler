@@ -21,7 +21,7 @@ class PabPokemon {
         this.move1 = null;
         this.move2 = null;
         this.currentHP = this.hp;
-        this.fainter = false;
+        this.fainted = false;
     }
 
     getType1(pokemonObj) {
@@ -41,6 +41,10 @@ class PabPokemon {
             let randomNumber = Math.floor(Math.random() * 8)
             return pokeEvoChain.chain.evolves_to[randomNumber].species.name
         } 
+        if (pokeName === 'tyrogue'){
+            let randomNumber = Math.floor(Math.random() * 3)
+            return pokeEvoChain.chain.evolves_to[randomNumber].species.name
+        }
         if (pokeEvoChain.chain.evolves_to[0]) return pokeEvoChain.chain.evolves_to[0].species.name
     }
 }

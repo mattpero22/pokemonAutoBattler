@@ -202,6 +202,8 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     // PRE BATTLE
     prepPlayerPokemonTeam(playerTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
     prepOppPokemonTeam(oppTeam, currentWins)
+    displayPlayerTeamHealth(playerTeam)
+    displayOppTeamHealth(oppTeam)
     let firstMove = coinFlip();
     let playerBattleTeam = playerTeam;
     let oppBattleTeam = oppTeam;
@@ -242,6 +244,7 @@ function prepPlayerPokemonTeam (team, currentWins) {
     team.forEach(function(poke) {
         let additionalStats = currentWins * poke.evolutionsWithPlayer;
         poke.hp += additionalStats
+        poke.currentHP += additionalStats
         poke.atk += additionalStats
         poke.def += additionalStats
         poke.spe += additionalStats
@@ -255,6 +258,7 @@ function prepOppPokemonTeam (team, currentWins) {
     let additionalStats = currentWins;
     team.forEach(function(poke) {
         poke.hp += additionalStats
+        poke.currentHP += additionalStats
         poke.atk += additionalStats
         poke.def += additionalStats
         poke.spe += additionalStats
@@ -274,14 +278,28 @@ function coinFlip() {
 }
 
 function postPlayerPokemonTeam (team, currentWins){
+    let i = 1;
     team.forEach(function(poke) {
+        console.log(poke)
         // remove the temporary stat gain from battle
         let additionalStats = currentWins * poke.evolutionsWithPlayer;
         poke.hp -= additionalStats
+        poke.currentHP -= additionalStats
         poke.atk -= additionalStats
         poke.def -= additionalStats
         poke.spe -= additionalStats
         poke.roundsWithPlayer += 1
+        if (poke.roundsWithPlayer === 5 && poke.evolution !== undefined) {
+            console.log(`${poke.name} is going to evolve into ${poke.evolution}`)
+            team[i-1] = new PabPokemon(getPokemonByName(`${poke.evolution}`))
+            let newEvolution = getPokemonEvoChainByURL(team[i-1].speciesObj.evolution_chain.url)
+            console.log(newEvolution)
+            console.log(newEvolution.chain.evolves_to[0].species)
+            if (newEvolution.chain.evolves_to[0].evolves_to[0]) team[i-1].evolution = newEvolution.chain.evolves_to[0].evolves_to[0].species.name
+            team[i-1].evolutionsWithPlayer += 1;
+            localStorage.setItem(`pabPoke${i}`, JSON.stringify(poke))
+        }
+        i += 1;
     })
 }
 
