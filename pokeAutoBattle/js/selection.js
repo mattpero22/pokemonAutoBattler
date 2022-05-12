@@ -42,10 +42,9 @@ generatePokeCard(choices.pokemon3, '#card3');
 let pabPoke1 = new PabPokemon(choices.pokemon1)
 let pabPoke2 = new PabPokemon(choices.pokemon2)
 let pabPoke3 = new PabPokemon(choices.pokemon3)
-console.log(choices.pokemon1)
-console.log(pabPoke1)
-console.log(pabPoke2)
-console.log(pabPoke3)
+// console.log(pabPoke1)
+// console.log(pabPoke2)
+// console.log(pabPoke3)
 
 
 displayPlayerTeam();
@@ -76,6 +75,10 @@ $('#confirm-btn').on("click", function() {
         }
         localStorage.setItem('playerTeam', temp)
         localStorage.setItem('pokeAdded', true)
+        let pabPoke = new PabPokemon(getPokemonByName(choices.playerChoice))
+        localStorage.setItem(`pabPoke${temp.length}`, JSON.stringify(pabPoke))
+        
+       
         newTeamPoke = getPokemonByName(temp[temp.length - 1])
         $(".inactive:first").append(`<img src="${newTeamPoke.sprites.front_default}"/>`).removeClass('inactive')
         $("#tobattle-btn").css("background-color", "yellow").on("click", function() {
