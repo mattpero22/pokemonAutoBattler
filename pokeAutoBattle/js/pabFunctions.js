@@ -135,7 +135,13 @@ function displayPlayerTeam() {
     temp = temp.split(",")
     temp.forEach(function(name){
         let teamPoke = getPokemonByName(name)
-        $(".inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`).removeClass('inactive')
+        $("#player-team>.inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`).removeClass('inactive')
+    })
+}
+
+function displayOpponentTeam(opponentTeam) {
+    opponentTeam.forEach(function(pabPoke){
+        $("#enemy-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive')
     })
 }
 
@@ -156,7 +162,15 @@ function activateBattle() {
 }
 
 function generateOpponentTeam(){
+    let opponentTeam = []
     let playerTeam = localStorage.getItem("playerTeam")
     playerTeam = playerTeam.split(',')
-    console.log(playerTeam)
+    let numPokemon = playerTeam.length
+    console.log(numPokemon)
+
+    for (let i=0; i<numPokemon; i++) {
+        let nextPokemon = new PabPokemon(getValidPokemonChoice('national'));
+        opponentTeam.push(nextPokemon)
+    }
+    return opponentTeam
 }

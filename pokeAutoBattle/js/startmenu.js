@@ -2,7 +2,6 @@
 $body = $('body')
 $playBtn = $('#play-btn')       // starts game
 $rulesBtn = $('#rules-btn')     // displays the rule frame
-$themeBtn = $('#theme-btn')     // toggles day and night theme
 
 // fade in on load
 $(window).on('load', fadeScreen())

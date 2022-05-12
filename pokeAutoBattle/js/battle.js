@@ -1,7 +1,8 @@
 $(window).on('load', fadeScreen())
 $('#battle-hdr').text(`Battle # ${parseInt(localStorage.getItem("wins")) + 1}`)
 displayPlayerTeam();
-generateOpponentTeam();
+let oppTeam = generateOpponentTeam();
+displayOpponentTeam(oppTeam);
 
 
 
