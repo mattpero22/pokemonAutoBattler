@@ -91,7 +91,6 @@ function getValidPokemonChoice(region) {
     while (validChoice === false) {                                             // enter while loop
         let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));// get a pokemon object 
         let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);             // get the pokemon species object
-        console.log(pokemon.name)
         if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {// check if it is a legendary or mythic
             if(ultraBeasts.includes(pokemon.name) === false){
                 validChoice = true
@@ -148,4 +147,11 @@ function activateBattle() {
     $("#tobattle-btn").css("background-color", "yellow").on("click", function() {
         location.href="./battle.html"
     })
+}
+
+function generateOpponentTeam(number) {
+    for (i=0; i<number; i++){
+        let nextPoke = getValidPokemonChoice('national');
+        console.log(nextPoke)
+    }
 }

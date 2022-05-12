@@ -37,6 +37,17 @@ choices.pokemon3 = getValidPokemonChoice(regionType);
 generatePokeCard(choices.pokemon1, '#card1');
 generatePokeCard(choices.pokemon2, '#card2');
 generatePokeCard(choices.pokemon3, '#card3');
+
+let pabPoke1 = new PabPokemon(choices.pokemon1)
+let pabPoke2 = new PabPokemon(choices.pokemon2)
+let pabPoke3 = new PabPokemon(choices.pokemon3)
+console.log(pabPoke1)
+console.log(pabPoke2)
+console.log(pabPoke3)
+console.log(choices.pokemon1)
+console.log(choices.pokemon2)
+console.log(choices.pokemon3)
+
 displayPlayerTeam();
 if (maxTeamSize === 'true') activateBattle();
 

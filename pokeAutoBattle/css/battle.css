@@ -17,18 +17,21 @@ body {
     flex-direction: column;
     align-items: flex-start;
     width: 33vw;
-    border: 5px purple solid;
     height: 100vh;
 }
 
 #combat-log {
-    border: 2px red solid;
-    height: 50%;
+    border: 2px black solid;
+    height: 80%;
     width: 100%;
     display: flex;
-    scrollbar-width: thin;
-    scrollbar-color: blue orange;
-    overflow-y: scroll;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: rgba(245, 245, 245, 0.67);
+}
+
+#combat-log>p {
+    margin-left: 3px;
 }
 
 #battle-area {
@@ -64,12 +67,11 @@ body {
 .team-poke {
     display: flex;
     flex-direction: column;
-    border: 2px solid black;
     width: 15vw;
     height: 15vw;
     max-width: 120px;
     max-height: 120px;
-    margin: 5px;
+    margin: 2px;
 }
 
 .team-poke>img {
