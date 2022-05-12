@@ -121,15 +121,18 @@ function generatePokeCard(pokemon, div){
         $div.append(`<p>${stat.base_stat} ${statsAbbr[stat.stat.name]}</p>`) 
         totalStats += stat.base_stat;
     });
-    $div.append(`<p>${totalStats} TOTAL</p>`)
+    $div.append(`<p>${totalStats} <strong>TOTAL</p>`)
 }
 
-function generatePokeTeamCard(pokemon, teamDiv){
-    let $teamDiv = $(teamDiv);
-
+function displayPlayerTeam() {
+    let temp = localStorage.getItem("playerTeam")
+    if (temp === '') return
+    temp = temp.split(",")
+    temp.forEach(function(name){
+        let teamPoke = getPokemonByName(name)
+        $(".inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`).removeClass('inactive')
+    })
 }
-
-
 
 // generate a pokemon team card
 function prepareGame() {
@@ -139,4 +142,10 @@ function prepareGame() {
     localStorage.setItem("wins", PABwins)
     localStorage.setItem("playerTeam", PABplayerTeam)
     localStorage.setItem("active", true)
+}
+
+function activateBattle() {
+    $("#tobattle-btn").css("background-color", "yellow").on("click", function() {
+        location.href="./battle.html"
+    })
 }

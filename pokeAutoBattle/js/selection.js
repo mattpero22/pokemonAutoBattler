@@ -26,6 +26,7 @@ $('#return2menu-btn').click(()=>location.href="./index.html")
 // get and set local storage
 let numWins = parseInt(localStorage.getItem('wins')) || 0;
 let active = localStorage.getItem('active') || true;
+let maxTeamSize = localStorage.getItem('maxTeamSize' || false);
 
 // get the highest allowed number for the pokemon and then get 3 randomly that are first evo or only evo
 choices.pokemon1 = getValidPokemonChoice(regionType);
@@ -36,6 +37,8 @@ choices.pokemon3 = getValidPokemonChoice(regionType);
 generatePokeCard(choices.pokemon1, '#card1');
 generatePokeCard(choices.pokemon2, '#card2');
 generatePokeCard(choices.pokemon3, '#card3');
+displayPlayerTeam();
+if (maxTeamSize === 'true') activateBattle();
 
 $pokeCard.on("click", function (evt) {
     $('.poke-card').css({backgroundColor: '#b5d5efe6'});
@@ -53,15 +56,20 @@ $('#confirm-btn').on("click", function() {
         if (playerTeam === 'noPokemon') temp.push(choices.playerChoice)
         else {
             temp = playerTeam.split(",")
-            if (temp.length === 6) return
+            if (temp.length === 6) {
+                localStorage.setItem("maxTeamSize", true)
+                activateBattle();
+                return
+            }
             temp.push(choices.playerChoice)
         }
         localStorage.setItem('playerTeam', temp)
         localStorage.setItem('pokeAdded', true)
-        temp.forEach(function(name) {
-            let teamPoke = getPokemonByName(name)
-            $(".inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`).removeClass('inactive')
-            $("#tobattle-btn").css("background-color", "yellow").on("click", ()=>location.href="./index.html")
+        newTeamPoke = getPokemonByName(temp[temp.length - 1])
+        $(".inactive:first").append(`<img src="${newTeamPoke.sprites.front_default}"/>`).removeClass('inactive')
+        $("#tobattle-btn").css("background-color", "yellow").on("click", function() {
+            location.href="./battle.html"
+            localStorage.setItem("pokeAdded", false)
         })
     }
 })

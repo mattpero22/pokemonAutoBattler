@@ -15,7 +15,7 @@ $playBtn.on('click', function(){
         $('#startmenu-btns')
             .append('<input id="continue" type="button" class="startmenu-btn" value="CONTINUE"/>')
             .append('<input id="reset" type="button" class="startmenu-btn" value="NEW GAME"/>')
-            .append('<h3>Previous game detected. Would you like to continue?</h3>')
+        $('#title-box').append('<h3><br>Previous game detected. Would you like to continue?</h3>')
     } else {
         prepareGame();
         $body.fadeOut(1000, function() {location.href = "./selection.html"; }) 

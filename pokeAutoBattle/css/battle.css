@@ -1,0 +1,17 @@
+body {
+    background-image: url("./images/battlescene.png");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: slategray;
+    height: 100vh;
+}
+
+#battle-grid {
+    display: grid;
+    height: 60%;
+    width: 80%;
+    border: 5px solid whitesmoke;
+    margin: 10px;
+}
