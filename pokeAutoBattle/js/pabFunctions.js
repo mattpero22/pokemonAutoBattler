@@ -202,6 +202,8 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     // POST BATTLE
     postPlayerPokemonTeam(playerTeam, currentWins)
     savePlayerTeamToLocal(playerTeam)
+    console.log(currentWins)
+    localStorage.setItem("wins", currentWins + 1)
     $('#divider').append('<input id="return" class="battle-btn" type="button" value="BATTLE COMPLETE"/>')
     $('#return').css('background-color', 'yellow').on('click', () => location.href="./selection.html")
 
