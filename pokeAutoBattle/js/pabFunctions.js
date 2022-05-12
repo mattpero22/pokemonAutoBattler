@@ -186,9 +186,18 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     let speedOrderOppTeam = oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
     let currentWins = parseInt(localStorage.getItem("wins"))
 
+    // PRE BATTLE
     prepPlayerPokemonTeam(playerTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
     prepOppPokemonTeam(oppTeam, currentWins)
+    let coinFlip = Math.floor(Math.random() * 2)
+    $('combat-log').append(``)
 
+    // BATTLE
+
+
+    // POST BATTLE
+    postPlayerPokemonTeam(playerTeam, currentWins)
+    savePlayerTeamToLocal(playerTeam)
 
 }
 
@@ -199,7 +208,8 @@ function prepPlayerPokemonTeam (team, currentWins) {
         poke.atk += additionalStats
         poke.def += additionalStats
         poke.spe += additionalStats
-        $('#combat-log').append(`<p>${poke.name} gained ${additionalStats} in all stats...</p>`)
+        $('#combat-log').append(`<p>
+        ${poke.name} gained ${additionalStats} in all stats...</p>`)
     })
 }
 
@@ -213,4 +223,24 @@ function prepOppPokemonTeam (team, currentWins) {
         poke.spe += additionalStats
     })
     $('#combat-log').append(`<p>Pokemon on the opp. team gained ${additionalStats} in all stats...</p>`)
+}
+
+function postPlayerPokemonTeam (team, currentWins){
+    team.forEach(function(poke) {
+        // remove the temporary stat gain from battle
+        let additionalStats = currentWins * poke.evolutionsWithPlayer;
+        poke.hp -= additionalStats
+        poke.atk -= additionalStats
+        poke.def -= additionalStats
+        poke.spe -= additionalStats
+        poke.roundsWithPlayer += 1
+    })
+}
+
+function savePlayerTeamToLocal(playerTeam) {
+    let i = 1;
+    playerTeam.forEach(function(pokemon) {
+        localStorage.setItem(`pabPoke${i}`, JSON.stringify(pokemon))
+        i += 1
+    })
 }

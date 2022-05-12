@@ -4,15 +4,3 @@ let playerTeam = displayPlayerTeam();    // display their team
 let oppTeam = generateOpponentTeam();   // create an array of PabPokemon for the opponents teakm
 displayOpponentTeam(oppTeam);
 battle(playerTeam, oppTeam);
-
-
-
-
-
-
-
-i = 0
-while (i < 10) {
-    $('#combat-log').append('<p>battle event</p>')
-    i += 1
-}
