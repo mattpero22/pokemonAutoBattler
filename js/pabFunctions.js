@@ -131,27 +131,42 @@ function generatePokeCard(pokemon, div){
 
 function displayPlayerTeam(playerTeam) {
     playerTeam.forEach(function(pabPoke){
-        $("#player-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive')
+        $("#player-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive').addClass('alive')
+        $(".alive").css("animation-delay", "250ms")
     })
 }
 
 function displayOpponentTeam(opponentTeam) {
     opponentTeam.forEach(function(pabPoke){
-        $("#enemy-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive')
+        $("#enemy-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive').addClass('alive')
     })
 }
 
 function displayPlayerTeamHealth(team) {
     team.forEach(function (poke) {
-        $("#player-team-health>.inactive:first").append(`<p>${poke.currentHP} / ${poke.hp}</p>`).removeClass('inactive')
+        $("#player-team-health>.inactive:first").append(`<p>${poke.currentHP} / ${poke.hp}</p>`).removeClass('inactive').addClass('active')
     })
 }
 
 function displayOppTeamHealth(team) {
     team.forEach(function (poke) {
-        $("#opp-team-health>.inactive:first").append(`<p>${poke.currentHP} / ${poke.hp}</p>`).removeClass('inactive')
+        $("#opp-team-health>.inactive:first").append(`<p>${poke.currentHP} / ${poke.hp}</p>`).removeClass('inactive').addClass('active')
     })
 }
+
+function updateTeamHealth(playerTeam, oppTeam){
+    let i = 1;
+    playerTeam.forEach(function(pokemon) {
+        $(`#player-team-health>.active:nth-child(${i})>p`).text(`${pokemon.currentHP}/${pokemon.hp}`)
+        i += 1
+    })
+    let j = 1
+    oppTeam.forEach(function(pokemon) {
+        $(`#player-team-health>.active:nth-child(${j})>p`).text(`${pokemon.currentHP}/${pokemon.hp}`)
+        j += 1
+    })
+}
+
 
 // generate a pokemon team card
 function prepareGame() {
@@ -201,8 +216,6 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
     let battleActive = true;
     let playerTeam = generatePlayerTeam();
     let oppTeam = generateOpponentTeam();
-    displayPlayerTeam(playerTeam);
-    displayOpponentTeam(oppTeam);
     console.log(playerTeam, oppTeam)
     let playerBattleTeam = playerTeam.sort((a,b) => b.spe - a.spe)  // for each pabPoke in the player's team, sort by fastest -> slowest
     let oppBattleTeam = oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
@@ -210,10 +223,12 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
     let currentWins = parseInt(localStorage.getItem("wins"))
 
     // PRE BATTLE
-    prepPlayerPokemonTeam(playerTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
-    prepOppPokemonTeam(oppTeam, currentWins)
-    displayPlayerTeamHealth(playerTeam)
-    displayOppTeamHealth(oppTeam)
+    displayPlayerTeam(playerBattleTeam);
+    displayOpponentTeam(oppBattleTeam)
+    prepPlayerPokemonTeam(playerBattleTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
+    prepOppPokemonTeam(oppBattleTeam, currentWins)
+    displayPlayerTeamHealth(playerBattleTeam)
+    displayOppTeamHealth(oppBattleTeam)
     let firstMove = coinFlip();
 
     // BATTLE
@@ -222,20 +237,32 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
         let playerTurns = 0
         let oppTurns = 0
         if (firstMove === null){
-
+            if(nextMove = 'player'){
+                nextMove = 'opp'
+            }
+            if (nextMove = 'opp') {
+                nextMove = 'player'
+            }
         }
         else if (firstMove === 'player') {
-            basicAttack(playerTeam[playerTurns], oppBattleTeam[Math.floor(Math.random() * oppBattleTeam.length)])
+            randomTarget = Math.floor(Math.random() * oppBattleTeam.length)
+            damage = basicAttack(playerTeam[playerTurns], oppBattleTeam[randomTarget])
+            oppBattleTeam[randomTarget].currentHP -= damage
+            console.log(oppBattleTeam[randomTarget])
             playerTurns += 1;
-            nextAttack = 'opp';
+            nextMove = 'opp';
             firstMove = null;
         } else if (firstMove === 'opp') {
-            basicAttack(oppTeam[oppTurns], playerBattleTeam[Math.floor(Math.random() * playerBattleTeam.length)])
+            randomTarget = Math.floor(Math.random() * playerBattleTeam.length)
+            damage = basicAttack(oppTeam[oppTurns], playerBattleTeam[randomTarget])
+            playerBattleTeam[randomTarget].currentHP -= damage
+            console.log(playerBattleTeam[randomTarget])
             oppTurns += 1;
-            nextAttack = 'player'
+            nextMove = 'player'
             firstMove = null;
         }
-            battleActive = false
+
+        battleActive = false
     }
 
 
@@ -317,7 +344,7 @@ function savePlayerTeamToLocal(playerTeam) {
 }
 
 function attack(attacker) {
-    let randomChoice = Math.floor(Math.random() * 10) 
+    let randomChoice = Math.floor(Math.random() * 10)
     if (attacker.move1 === null && attacker.move2 === null) {
     }
 }
@@ -328,5 +355,5 @@ function basicAttack(attacker, defender) {
     let power = 20;
     let dmg = Math.floor((power * (atk/def)));
     $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
-    console.log(defender.currentHP)
+    return dmg
 }

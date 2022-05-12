@@ -47,7 +47,7 @@ let pabPoke3 = new PabPokemon(choices.pokemon3)
 // console.log(pabPoke3)
 
 userTeam = generatePlayerTeam();
-displayPlayerTeam(userTeam);
+if (userTeam !== undefined) displayPlayerTeam(userTeam);
 if (maxTeamSize === 'true') activateBattle();
 
 $pokeCard.on("click", function (evt) {

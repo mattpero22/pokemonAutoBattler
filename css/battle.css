@@ -89,7 +89,7 @@ body {
     background-color: whitesmoke;
     border-radius: 10px;
     border: 2px black solid;
-    
+
 }
 
 .inactive {
@@ -110,3 +110,17 @@ body {
     transform: scale(1.1);
 }
 
+.alive {
+    animation: bob 1s linear infinite;
+    position: relative;
+    bottom: 0;
+}
+
+@keyframes bob {
+    0%, 100% {
+        bottom: 0;
+    }
+    50% {
+        bottom: 10px;
+    }
+}
