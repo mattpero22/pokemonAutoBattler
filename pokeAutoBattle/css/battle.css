@@ -43,6 +43,9 @@ body {
 
 #divider {
     width: 40vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .poke-team {
@@ -84,3 +87,16 @@ body {
     background-color: rgba(0,0,0,0);
 }
 
+.battle-btn {
+    font-family: 'pokemonFont';
+    max-height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid black;
+    transition: transform .2s;
+    margin-left: 15px;
+}
+
+.battle-btn:hover {
+    transform: scale(1.1);
+}

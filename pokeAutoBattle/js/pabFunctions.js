@@ -182,8 +182,8 @@ function generateOpponentTeam(){
 function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and then take in the oppTeam as an arg
     // vars used in battle
     let battleActive = true;
-    let speedOrderPlayerTeam = playerTeam.sort((a,b) => b.spe - a.spe)  // for each pabPoke in the player's team, sort by fastest -> slowest
-    let speedOrderOppTeam = oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
+    playerTeam.sort((a,b) => b.spe - a.spe)  // for each pabPoke in the player's team, sort by fastest -> slowest
+    oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
     let currentWins = parseInt(localStorage.getItem("wins"))
 
     // PRE BATTLE
@@ -193,9 +193,8 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
 
     // BATTLE
     while (battleActive) {
-        performBasicAttack(speedOrderPlayerTeam[0], oppTeam[0])
-        performBasicAttack(speedOrderPlayerTeam[1], oppTeam[0])
-        performBasicAttack(speedOrderPlayerTeam[2], oppTeam[0])
+        performBasicAttack(playerTeam[0], oppTeam[0])
+
         battleActive = false
     }
 
@@ -203,6 +202,8 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     // POST BATTLE
     postPlayerPokemonTeam(playerTeam, currentWins)
     savePlayerTeamToLocal(playerTeam)
+    $('#divider').append('<input id="return" class="battle-btn" type="button" value="BATTLE COMPLETE"/>')
+    $('#return').css('background-color', 'yellow').on('click', () => location.href="./selection.html")
 
 }
 
