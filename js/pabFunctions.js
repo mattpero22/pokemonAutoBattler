@@ -129,20 +129,10 @@ function generatePokeCard(pokemon, div){
     $div.append(`<p>${totalStats} TOTAL</p>`)
 }
 
-function displayPlayerTeam() {
-    let temp = localStorage.getItem("playerTeam")
-    if (temp === '') return
-    temp = temp.split(",")
-    let i = 0;
-    let userTeam = []
-    temp.forEach(function(){
-        i += 1;
-        let nextPoke = JSON.parse(localStorage.getItem(`pabPoke${i}`))
-        userTeam.push(nextPoke)
-        $("#player-team>.inactive:first")
-            .append(`<img src="${nextPoke.sprite}"/>`).removeClass('inactive')
+function displayPlayerTeam(playerTeam) {
+    playerTeam.forEach(function(pabPoke){
+        $("#player-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive')
     })
-    return userTeam
 }
 
 function displayOpponentTeam(opponentTeam) {
@@ -179,6 +169,20 @@ function activateBattle() {
     })
 }
 
+function generatePlayerTeam() {
+    let temp = localStorage.getItem("playerTeam")
+    if (temp === '') return
+    temp = temp.split(",")
+    let i = 1;
+    let userTeam = []
+    temp.forEach(function(){
+        let nextPoke = JSON.parse(localStorage.getItem(`pabPoke${i}`))
+        userTeam.push(nextPoke)
+        i += 1
+    })
+    return userTeam
+}
+
 function generateOpponentTeam(){
     let opponentTeam = []
     let playerTeam = localStorage.getItem("playerTeam")
@@ -192,11 +196,17 @@ function generateOpponentTeam(){
     return opponentTeam
 }
 
-function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and then take in the oppTeam as an arg
+function battle() {  // take in the playerTeam as an arg and then take in the oppTeam as an arg
     // vars used in battle
     let battleActive = true;
-    playerTeam.sort((a,b) => b.spe - a.spe)  // for each pabPoke in the player's team, sort by fastest -> slowest
-    oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
+    let playerTeam = generatePlayerTeam();
+    let oppTeam = generateOpponentTeam();
+    displayPlayerTeam(playerTeam);
+    displayOpponentTeam(oppTeam);
+    console.log(playerTeam, oppTeam)
+    let playerBattleTeam = playerTeam.sort((a,b) => b.spe - a.spe)  // for each pabPoke in the player's team, sort by fastest -> slowest
+    let oppBattleTeam = oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
+    console.log(playerTeam, oppTeam)
     let currentWins = parseInt(localStorage.getItem("wins"))
 
     // PRE BATTLE
@@ -205,8 +215,6 @@ function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and 
     displayPlayerTeamHealth(playerTeam)
     displayOppTeamHealth(oppTeam)
     let firstMove = coinFlip();
-    let playerBattleTeam = playerTeam;
-    let oppBattleTeam = oppTeam;
 
     // BATTLE
     while (battleActive) {
@@ -280,7 +288,6 @@ function coinFlip() {
 function postPlayerPokemonTeam (team, currentWins){
     let i = 1;
     team.forEach(function(poke) {
-        console.log(poke)
         // remove the temporary stat gain from battle
         let additionalStats = currentWins * poke.evolutionsWithPlayer;
         poke.hp -= additionalStats
@@ -293,8 +300,6 @@ function postPlayerPokemonTeam (team, currentWins){
             console.log(`${poke.name} is going to evolve into ${poke.evolution}`)
             team[i-1] = new PabPokemon(getPokemonByName(`${poke.evolution}`))
             let newEvolution = getPokemonEvoChainByURL(team[i-1].speciesObj.evolution_chain.url)
-            console.log(newEvolution)
-            console.log(newEvolution.chain.evolves_to[0].species)
             if (newEvolution.chain.evolves_to[0].evolves_to[0]) team[i-1].evolution = newEvolution.chain.evolves_to[0].evolves_to[0].species.name
             team[i-1].evolutionsWithPlayer += 1;
             localStorage.setItem(`pabPoke${i}`, JSON.stringify(poke))
@@ -324,20 +329,4 @@ function basicAttack(attacker, defender) {
     let dmg = Math.floor((power * (atk/def)));
     $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
     console.log(defender.currentHP)
-}
-
-function move1Attack(attacker, defender) {
-    let atk = attacker.atk;
-    let def = defender.def;
-    let power = 20;
-    let dmg = Math.floor((power * (atk/def)));
-    $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
-}
-
-function move2Attack(attacker, defender) {
-    let atk = attacker.atk;
-    let def = defender.def;
-    let power = 20;
-    let dmg = Math.floor((power * (atk/def)));
-    $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
 }
