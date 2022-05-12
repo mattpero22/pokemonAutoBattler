@@ -17,7 +17,7 @@ class PabPokemon {
 
         // data and counters I will be using for my game obj
         this.roundsWithPlayer = 0;
-        this.timesEvolvedWithPlayer = 0;
+        this.evolutionsWithPlayer = 1;
         this.move1 = null;
         this.move2 = null;
     }

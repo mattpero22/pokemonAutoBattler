@@ -171,11 +171,46 @@ function generateOpponentTeam(){
     let playerTeam = localStorage.getItem("playerTeam")
     playerTeam = playerTeam.split(',')
     let numPokemon = playerTeam.length
-    console.log(numPokemon)
 
     for (let i=0; i<numPokemon; i++) {
         let nextPokemon = new PabPokemon(getValidPokemonChoice('national'));
         opponentTeam.push(nextPokemon)
     }
     return opponentTeam
+}
+
+function battle(playerTeam, oppTeam) {  // take in the playerTeam as an arg and then take in the oppTeam as an arg
+    // vars used in battle
+    let battleActive = true;
+    let speedOrderPlayerTeam = playerTeam.sort((a,b) => b.spe - a.spe)  // for each pabPoke in the player's team, sort by fastest -> slowest
+    let speedOrderOppTeam = oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
+    let currentWins = parseInt(localStorage.getItem("wins"))
+
+    prepPlayerPokemonTeam(playerTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
+    prepOppPokemonTeam(oppTeam, currentWins)
+
+
+}
+
+function prepPlayerPokemonTeam (team, currentWins) {
+    team.forEach(function(poke) {
+        let additionalStats = currentWins * poke.evolutionsWithPlayer;
+        poke.hp += additionalStats
+        poke.atk += additionalStats
+        poke.def += additionalStats
+        poke.spe += additionalStats
+        $('#combat-log').append(`<p>${poke.name} gained ${additionalStats} in all stats...</p>`)
+    })
+}
+
+
+function prepOppPokemonTeam (team, currentWins) {
+    let additionalStats = currentWins;
+    team.forEach(function(poke) {
+        poke.hp += additionalStats
+        poke.atk += additionalStats
+        poke.def += additionalStats
+        poke.spe += additionalStats
+    })
+    $('#combat-log').append(`<p>Pokemon on the opp. team gained ${additionalStats} in all stats...</p>`)
 }
