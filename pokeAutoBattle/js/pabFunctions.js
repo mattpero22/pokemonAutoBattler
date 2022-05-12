@@ -126,17 +126,22 @@ function generatePokeCard(pokemon, div){
         $div.append(`<p>${stat.base_stat} ${statsAbbr[stat.stat.name]}</p>`) 
         totalStats += stat.base_stat;
     });
-    $div.append(`<p>${totalStats} <strong>TOTAL</p>`)
+    $div.append(`<p>${totalStats} TOTAL</p>`)
 }
 
 function displayPlayerTeam() {
     let temp = localStorage.getItem("playerTeam")
     if (temp === '') return
     temp = temp.split(",")
-    temp.forEach(function(name){
-        let teamPoke = getPokemonByName(name)
-        $("#player-team>.inactive:first").append(`<img src="${teamPoke.sprites.front_default}"/>`).removeClass('inactive')
+    let i = 0;
+    let userTeam = []
+    temp.forEach(function(){
+        i += 1;
+        let nextPoke = JSON.parse(localStorage.getItem(`pabPoke${i}`))
+        userTeam.push(nextPoke)
+        $("#player-team>.inactive:first").append(`<img src="${nextPoke.sprite}"/>`).removeClass('inactive')
     })
+    return userTeam
 }
 
 function displayOpponentTeam(opponentTeam) {
