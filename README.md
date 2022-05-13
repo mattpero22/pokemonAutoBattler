@@ -12,7 +12,7 @@
 Pokemon Auto Battler is a unique game that uses pokemon as the characters in a roguelike adventure. Start by selecting your first pokemon of three randomly generated ones. Following, you're pitted against the computer in a game of... well... randomness. You don't need to do anything except choose your pokemon wisely and hope for the best!
 
 ## Rules
-1. Upon starting the game, select the play button. If there is a local save, you will be prompted to continue to to begin anew.
+1. Upon starting the game, select the play button. If there is a local save, you will be prompted to continue or to begin anew.
 ![titleScreen](https://i.imgur.com/WP1B1y5.png)
 2. Three random pokemon will be generated for you to select from.
    ![pokeSelection](https://i.imgur.com/gf5s6qw.png)
