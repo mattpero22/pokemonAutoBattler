@@ -106,10 +106,10 @@ function getValidPokemonChoice(region) {
     }
 }
 
-// get a valid choice pokemon for the computer's team
-function getComputerPokemon() {
-    let playerWins = localStorage.getItem("wins")
-    console.log(wins)
+function getAnyPokemonChoice(region) {
+    let pokemonRange = getPokedexByRegion(region).pokemon_entries.length;
+    let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange))
+    return pokemon
 }
 
 // generate pokemon selection card contents and event listener
@@ -132,16 +132,14 @@ function generatePokeCard(pokemon, div){
 function displayPlayerTeam(playerTeam) {
     playerTeam.forEach(function(pabPoke){
         $("#player-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive')
-        if(pabPoke.fainted === false) $("#player-team>.inactive:first").addClass('alive')
-        else $("#player-team>.inactive:first").removeClass('alive')
+        $("#player-team>.inactive:first").addClass('alive')
     })
 }
 
 function displayOpponentTeam(opponentTeam) {
     opponentTeam.forEach(function(pabPoke){
         $("#enemy-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive').addClass('alive')
-        if(pabPoke.fainted === false) $("#enemy-team>.inactive:first").addClass('alive')
-        else $("#enemy-team>.inactive:first").removeClass('alive')
+        $("#enemy-team>.inactive:first").addClass('alive')
     })
 }
 
@@ -192,10 +190,15 @@ function generateOpponentTeam(){
     let playerTeam = localStorage.getItem("playerTeam")
     playerTeam = playerTeam.split(',')
     let numPokemon = playerTeam.length
-
+    let wins = parseInt(localStorage.getItem("wins"))
     for (let i=0; i<numPokemon; i++) {
-        let nextPokemon = new PabPokemon(getValidPokemonChoice('national'));
-        opponentTeam.push(nextPokemon)
+        if (wins < 8) {
+            let nextPokemon = new PabPokemon(getValidPokemonChoice('national'));
+            opponentTeam.push(nextPokemon)
+        } else {
+            let nextPokemon = new PabPokemon(getAnyPokemonChoice('national'));
+            opponentTeam.push(nextPokemon)
+        }
     }
     return opponentTeam
 }
@@ -310,7 +313,8 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
             localStorage.setItem("numFaintedOpp", numFaintedOpp)
         }
     }
-
+    localStorage.setItem("numFaintedPlayer", 0)
+    localStorage.setItem("numFaintedOpp", 0)
     // POST BATTLE
     if (winner === 'player') {
         $('#combat-log').append('<p>~~~===---~~~YOU WIN~~~---===~~~</p>')
@@ -379,6 +383,7 @@ function postPlayerPokemonTeam (team, currentWins){
         poke.def -= additionalStats
         poke.spe -= additionalStats
         poke.roundsWithPlayer += 1
+        poke.fainted === false
         if (poke.roundsWithPlayer === 5 && poke.evolution !== undefined && poke.evolution !== poke.name) {
             $('#combat-log').append(`${poke.name} is going to evolve into ${poke.evolution}`)
             team[i-1] = new PabPokemon(getPokemonByName(`${poke.evolution}`))
@@ -412,6 +417,7 @@ function basicAttack(attacker, defender, defenderIdx, whoWasAttacked) {
     if (defender.currentHP <= 0) {
         $('#combat-log').append(`${defender.name} fainted!`)
         defender.fainted = true
+
         return 1
     }
     return 0
