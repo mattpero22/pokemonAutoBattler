@@ -34,6 +34,7 @@ Pokemon Auto Battler is a unique game that uses pokemon as the characters in a r
 - a pokemon's defense for damage calculation is its DEF + SPD
 - a pokemon that has successfully completed 5 battles with you will evolve!
 - a pokemon that has evolved while part of your team will get twice as many bonus stats
+- local storage saves your game so you can close it and come back later! (Game is deleted when you see game over though!)
 
 ### Future work
 - add animations for the battle scene
