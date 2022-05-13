@@ -154,20 +154,6 @@ function displayOppTeamHealth(team) {
     })
 }
 
-function updateTeamHealth(playerTeam, oppTeam){
-    let i = 1;
-    playerTeam.forEach(function(pokemon) {
-        $(`#player-team-health>.active:nth-child(${i})>p`).text(`${pokemon.currentHP}/${pokemon.hp}`)
-        i += 1
-    })
-    let j = 1
-    oppTeam.forEach(function(pokemon) {
-        $(`#player-team-health>.active:nth-child(${j})>p`).text(`${pokemon.currentHP}/${pokemon.hp}`)
-        j += 1
-    })
-}
-
-
 // generate a pokemon team card
 function prepareGame() {
     localStorage.clear();
@@ -216,15 +202,13 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
     let battleActive = true;
     let playerTeam = generatePlayerTeam();
     let oppTeam = generateOpponentTeam();
-    console.log(playerTeam, oppTeam)
     let playerBattleTeam = playerTeam.sort((a,b) => b.spe - a.spe)  // for each pabPoke in the player's team, sort by fastest -> slowest
     let oppBattleTeam = oppTeam.sort((a, b) => b.spe - a.spe)   // for each pabPoke in the opp's team, sort by fastest -> slowest
-    console.log(playerTeam, oppTeam)
     let currentWins = parseInt(localStorage.getItem("wins"))
 
     // PRE BATTLE
     displayPlayerTeam(playerBattleTeam);
-    displayOpponentTeam(oppBattleTeam)
+    displayOpponentTeam(oppBattleTeam);
     prepPlayerPokemonTeam(playerBattleTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
     prepOppPokemonTeam(oppBattleTeam, currentWins)
     displayPlayerTeamHealth(playerBattleTeam)
@@ -233,35 +217,28 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
 
     // BATTLE
     while (battleActive) {
-        let nextAttack = null
-        let playerTurns = 0
-        let oppTurns = 0
-        if (firstMove === null){
-            if(nextMove = 'player'){
+        let nextMove = null;
+        let numPlayerAttacks = 0;
+        let numOppAttacks = 0;
+        if (nextMove === null) {
+            if (firstMove === 'player'){
+                randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
+                basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp');
+                numPlayerAttacks += 1;
                 nextMove = 'opp'
+            } else if (firstMove === 'opp') {
+                randomTarget = Math.floor(Math.random() * playerBattleTeam.length);
+                basicAttack(oppBattleTeam[numOppAttacks], playerBattleTeam[randomTarget], randomTarget, 'player');
+                numOppAttacks += 1;
             }
-            if (nextMove = 'opp') {
-                nextMove = 'player'
-            }
-        }
-        else if (firstMove === 'player') {
-            randomTarget = Math.floor(Math.random() * oppBattleTeam.length)
-            damage = basicAttack(playerTeam[playerTurns], oppBattleTeam[randomTarget])
-            oppBattleTeam[randomTarget].currentHP -= damage
-            console.log(oppBattleTeam[randomTarget])
-            playerTurns += 1;
-            nextMove = 'opp';
-            firstMove = null;
-        } else if (firstMove === 'opp') {
-            randomTarget = Math.floor(Math.random() * playerBattleTeam.length)
-            damage = basicAttack(oppTeam[oppTurns], playerBattleTeam[randomTarget])
-            playerBattleTeam[randomTarget].currentHP -= damage
-            console.log(playerBattleTeam[randomTarget])
-            oppTurns += 1;
-            nextMove = 'player'
-            firstMove = null;
-        }
+        } else if (nextMove === 'player') {
+            randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
+            basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp');
+            numPlayerAttacks += 1;
+            nextMove = 'opp'
+        } else if (nextMove === 'opp') {
 
+        }
         battleActive = false
     }
 
@@ -318,7 +295,7 @@ function postPlayerPokemonTeam (team, currentWins){
         // remove the temporary stat gain from battle
         let additionalStats = currentWins * poke.evolutionsWithPlayer;
         poke.hp -= additionalStats
-        poke.currentHP -= additionalStats
+        poke.currentHP = poke.hp
         poke.atk -= additionalStats
         poke.def -= additionalStats
         poke.spe -= additionalStats
@@ -327,7 +304,9 @@ function postPlayerPokemonTeam (team, currentWins){
             console.log(`${poke.name} is going to evolve into ${poke.evolution}`)
             team[i-1] = new PabPokemon(getPokemonByName(`${poke.evolution}`))
             let newEvolution = getPokemonEvoChainByURL(team[i-1].speciesObj.evolution_chain.url)
-            if (newEvolution.chain.evolves_to[0].evolves_to[0]) team[i-1].evolution = newEvolution.chain.evolves_to[0].evolves_to[0].species.name
+            if (newEvolution.chain.evolves_to[0].evolves_to[0]) {
+                team[i-1].evolution = newEvolution.chain.evolves_to[0].evolves_to[0].species.name
+            }
             team[i-1].evolutionsWithPlayer += 1;
             localStorage.setItem(`pabPoke${i}`, JSON.stringify(poke))
         }
@@ -343,17 +322,14 @@ function savePlayerTeamToLocal(playerTeam) {
     })
 }
 
-function attack(attacker) {
-    let randomChoice = Math.floor(Math.random() * 10)
-    if (attacker.move1 === null && attacker.move2 === null) {
-    }
-}
-
-function basicAttack(attacker, defender) {
+function basicAttack(attacker, defender, defenderIdx, whoWasAttacked) {
     let atk = attacker.atk;
     let def = defender.def;
     let power = 20;
     let dmg = Math.floor((power * (atk/def)));
-    $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} -- ${dmg}dmg</p>`)
+    console.log(defenderIdx)
+    $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} (${dmg}dmg)</p>`)
+    defender.currentHP -= dmg
+    $(`#${whoWasAttacked}-team-health>.team-poke:nth-of-type(${defenderIdx + 1})>p`).text(`${defender.currentHP}/${defender.hp}`)
     return dmg
 }
