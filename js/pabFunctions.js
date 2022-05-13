@@ -223,23 +223,29 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
         if (nextMove === null) {
             if (firstMove === 'player'){
                 randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
-                basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp');
+                basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp', oppBattleTeam);
                 numPlayerAttacks += 1;
                 nextMove = 'opp'
             } else if (firstMove === 'opp') {
                 randomTarget = Math.floor(Math.random() * playerBattleTeam.length);
-                basicAttack(oppBattleTeam[numOppAttacks], playerBattleTeam[randomTarget], randomTarget, 'player');
+                basicAttack(oppBattleTeam[numOppAttacks], playerBattleTeam[randomTarget], randomTarget, 'player', playerBattleTeam);
                 numOppAttacks += 1;
+                nextMove = 'player'
             }
         } else if (nextMove === 'player') {
             randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
-            basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp');
+            basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp', oppBattleTeam);
             numPlayerAttacks += 1;
             nextMove = 'opp'
         } else if (nextMove === 'opp') {
-
+            randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
+            basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp');
+            numPlayerAttacks += 1;
+            nextMove = 'player'
         }
-        battleActive = false
+        console.log(playerBattleTeam.length)
+        if (playerBattleTeam.length === 0)
+            console.log('OPPONENT WINS')
     }
 
 
@@ -322,7 +328,7 @@ function savePlayerTeamToLocal(playerTeam) {
     })
 }
 
-function basicAttack(attacker, defender, defenderIdx, whoWasAttacked) {
+function basicAttack(attacker, defender, defenderIdx, whoWasAttacked, teamAttacked) {
     let atk = attacker.atk;
     let def = defender.def;
     let power = 20;
@@ -331,5 +337,8 @@ function basicAttack(attacker, defender, defenderIdx, whoWasAttacked) {
     $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} (${dmg}dmg)</p>`)
     defender.currentHP -= dmg
     $(`#${whoWasAttacked}-team-health>.team-poke:nth-of-type(${defenderIdx + 1})>p`).text(`${defender.currentHP}/${defender.hp}`)
-    return dmg
+    if (defender.currentHP <= 0) {
+        defender.fainted = true
+        teamAttacked.splice(defenderIdx, 1)
+    }
 }
