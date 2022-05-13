@@ -131,14 +131,17 @@ function generatePokeCard(pokemon, div){
 
 function displayPlayerTeam(playerTeam) {
     playerTeam.forEach(function(pabPoke){
-        $("#player-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive').addClass('alive')
-        $(".alive").css("animation-delay", "250ms")
+        $("#player-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive')
+        if(pabPoke.fainted === false) $("#player-team>.inactive:first").addClass('alive')
+        else $("#player-team>.inactive:first").removeClass('alive')
     })
 }
 
 function displayOpponentTeam(opponentTeam) {
     opponentTeam.forEach(function(pabPoke){
         $("#enemy-team>.inactive:first").append(`<img src="${pabPoke.sprite}"/>`).removeClass('inactive').addClass('alive')
+        if(pabPoke.fainted === false) $("#enemy-team>.inactive:first").addClass('alive')
+        else $("#enemy-team>.inactive:first").removeClass('alive')
     })
 }
 
@@ -214,47 +217,117 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
     displayPlayerTeamHealth(playerBattleTeam)
     displayOppTeamHealth(oppBattleTeam)
     let firstMove = coinFlip();
+    let nextMove = null;
+    let winner = null;
+    let numPlayerAttacks = 0;
+    let numOppAttacks = 0;
+    let attacker = null;
+    let target = null;
 
     // BATTLE
     while (battleActive) {
-        let nextMove = null;
-        let numPlayerAttacks = 0;
-        let numOppAttacks = 0;
+        let numFaintedPlayer = parseInt(localStorage.getItem("numFaintedPlayer"))
+        let numFaintedOpp = parseInt(localStorage.getItem("numFaintedOpp"))
+        console.log('player attacks', numPlayerAttacks)
+        console.log('opp attacks', numOppAttacks)
         if (nextMove === null) {
             if (firstMove === 'player'){
                 randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
-                basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp', oppBattleTeam);
-                numPlayerAttacks += 1;
+                numFaintedOpp += basicAttack(playerBattleTeam[numPlayerAttacks % playerBattleTeam.length], oppBattleTeam[randomTarget], randomTarget, 'opp');
+                numPlayerAttacks = numPlayerAttacks + 1;
                 nextMove = 'opp'
             } else if (firstMove === 'opp') {
                 randomTarget = Math.floor(Math.random() * playerBattleTeam.length);
-                basicAttack(oppBattleTeam[numOppAttacks], playerBattleTeam[randomTarget], randomTarget, 'player', playerBattleTeam);
+                numFaintedPlayer += basicAttack(oppBattleTeam[numOppAttacks % oppBattleTeam.length], playerBattleTeam[randomTarget], randomTarget, 'player');
                 numOppAttacks += 1;
                 nextMove = 'player'
             }
-        } else if (nextMove === 'player') {
-            randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
-            basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp', oppBattleTeam);
+        } 
+        else if (nextMove === 'player') {
+            validTarget = false
+            validAttacker = false
+            while (validTarget === false) {
+                randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
+                if (oppBattleTeam[randomTarget].fainted === false) {
+                    validTarget = true
+                    target = randomTarget
+                }
+            }
+            while (validAttacker === false) {
+                if(playerBattleTeam[numPlayerAttacks % playerBattleTeam.length].fainted === false) {
+                    validAttacker = true
+                    attacker = numPlayerAttacks % playerBattleTeam.length
+                }
+                else {
+                    randomAttacker = Math.floor(Math.random() * playerBattleTeam.length)
+                    if (playerBattleTeam[randomAttacker].fainted === false) {
+                        validAttacker = true
+                        attacker = randomAttacker
+                    }
+                }
+            }
+            console.log(attacker, target)
+            numFaintedOpp += basicAttack(playerBattleTeam[attacker], oppBattleTeam[target], target, 'opp');
             numPlayerAttacks += 1;
             nextMove = 'opp'
-        } else if (nextMove === 'opp') {
-            randomTarget = Math.floor(Math.random() * oppBattleTeam.length);
-            basicAttack(playerBattleTeam[numPlayerAttacks], oppBattleTeam[randomTarget], randomTarget, 'opp');
-            numPlayerAttacks += 1;
+        } 
+        else if (nextMove === 'opp') {
+            validTarget = false;
+            validAttacker = false;
+            while (validTarget === false) {
+                randomTarget = Math.floor(Math.random() * playerBattleTeam.length);
+                if (playerBattleTeam[randomTarget].fainted === false) {
+                    validTarget = true
+                    target = randomTarget
+                }
+            }
+            while (validAttacker === false) {
+                if(oppBattleTeam[numOppAttacks % oppBattleTeam.length].fainted === false) {
+                    attacker = numOppAttacks % oppBattleTeam.length
+                    validAttacker = true
+                }
+                else {
+                    randomAttacker = Math.floor(Math.random() * oppBattleTeam.length)
+                    if (oppBattleTeam[randomAttacker].fainted === false) {
+                        attacker = randomAttacker
+                        validAttacker = true
+                    } 
+                }
+            }
+            console.log(attacker, target)
+            numFaintedPlayer += basicAttack(oppBattleTeam[attacker], playerBattleTeam[target], target, 'player');
+            numOppAttacks += 1;
             nextMove = 'player'
         }
-        console.log(playerBattleTeam.length)
-        if (playerBattleTeam.length === 0)
-            console.log('OPPONENT WINS')
+        if (numFaintedPlayer === playerBattleTeam.length) {
+            battleActive = false;
+            winner = "opponent"
+        } else if (numFaintedOpp === oppBattleTeam.length) {
+            battleActive = false;
+            winner = "player"
+        } else {
+            localStorage.setItem("numFaintedPlayer", numFaintedPlayer)
+            localStorage.setItem("numFaintedOpp", numFaintedOpp)
+        }
     }
 
-
     // POST BATTLE
-    postPlayerPokemonTeam(playerTeam, currentWins)
-    savePlayerTeamToLocal(playerTeam)
-    localStorage.setItem("wins", currentWins + 1)
-    $('#divider').append('<input id="return" class="battle-btn" type="button" value="BATTLE COMPLETE"/>')
-    $('#return').css('background-color', 'yellow').on('click', () => location.href="./selection.html")
+    if (winner === 'player') {
+        $('#combat-log').append('<p>~~~===---~~~YOU WIN~~~---===~~~</p>')
+        postPlayerPokemonTeam(playerTeam, currentWins)
+        console.log(playerTeam)
+        savePlayerTeamToLocal(playerTeam)
+        localStorage.setItem("wins", currentWins + 1)
+        $('#divider').append('<input id="return" class="battle-btn" type="button" value="BATTLE COMPLETE"/>')
+        $('#return').css('background-color', 'yellow').on('click', () => location.href="./selection.html")
+    }
+    if (winner === 'opponent') {
+        $('#combat-log').append('<p>~~~===---~~~YOU LOSE~~~---===~~~</p>')
+        $('#combat-log').append(`<p>You won ${currentWins} battles.</p>`)
+        localStorage.clear()
+        $('#divider').append('<input id="return" class="battle-btn" type="button" value="GAME OVER"/>')
+        $('#return').css('background-color', 'red').on('click', () => location.href="./index.html")
+    }
 
 }
 
@@ -306,8 +379,8 @@ function postPlayerPokemonTeam (team, currentWins){
         poke.def -= additionalStats
         poke.spe -= additionalStats
         poke.roundsWithPlayer += 1
-        if (poke.roundsWithPlayer === 5 && poke.evolution !== undefined) {
-            console.log(`${poke.name} is going to evolve into ${poke.evolution}`)
+        if (poke.roundsWithPlayer === 5 && poke.evolution !== undefined && poke.evolution !== poke.name) {
+            $('#combat-log').append(`${poke.name} is going to evolve into ${poke.evolution}`)
             team[i-1] = new PabPokemon(getPokemonByName(`${poke.evolution}`))
             let newEvolution = getPokemonEvoChainByURL(team[i-1].speciesObj.evolution_chain.url)
             if (newEvolution.chain.evolves_to[0].evolves_to[0]) {
@@ -328,17 +401,18 @@ function savePlayerTeamToLocal(playerTeam) {
     })
 }
 
-function basicAttack(attacker, defender, defenderIdx, whoWasAttacked, teamAttacked) {
+function basicAttack(attacker, defender, defenderIdx, whoWasAttacked) {
     let atk = attacker.atk;
     let def = defender.def;
     let power = 20;
     let dmg = Math.floor((power * (atk/def)));
-    console.log(defenderIdx)
     $('#combat-log').append(`<p>${attacker.name} attacks ${defender.name} (${dmg}dmg)</p>`)
     defender.currentHP -= dmg
     $(`#${whoWasAttacked}-team-health>.team-poke:nth-of-type(${defenderIdx + 1})>p`).text(`${defender.currentHP}/${defender.hp}`)
     if (defender.currentHP <= 0) {
+        $('#combat-log').append(`${defender.name} fainted!`)
         defender.fainted = true
-        teamAttacked.splice(defenderIdx, 1)
+        return 1
     }
+    return 0
 }
