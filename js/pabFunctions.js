@@ -234,8 +234,9 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
 
     // BATTLE
     while (battleActive) {
-        let numFaintedPlayer = parseInt(localStorage.getItem("numFaintedPlayer"))
-        let numFaintedOpp = parseInt(localStorage.getItem("numFaintedOpp"))
+        let numFaintedPlayer = parseInt(localStorage.getItem("numFaintedPlayer")) || 0;
+        let numFaintedOpp = parseInt(localStorage.getItem("numFaintedOpp")) || 0;
+        console.log('oppTeamLength', oppBattleTeam.length, 'playerBattleTeam', playerBattleTeam.length)
         console.log('player attacks', numPlayerAttacks)
         console.log('opp attacks', numOppAttacks)
         if (nextMove === null) {
@@ -313,13 +314,8 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
         } else if (numFaintedOpp === oppBattleTeam.length) {
             battleActive = false;
             winner = "player"
-        } else {
-            localStorage.setItem("numFaintedPlayer", numFaintedPlayer)
-            localStorage.setItem("numFaintedOpp", numFaintedOpp)
-        }
+        } 
     }
-    localStorage.setItem("numFaintedPlayer", 0)
-    localStorage.setItem("numFaintedOpp", 0)
     // POST BATTLE
     if (winner === 'player') {
         $('#combat-log').append('<p>~~~===---~~~YOU WIN~~~---===~~~</p>')
@@ -327,6 +323,8 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
         console.log(playerTeam)
         savePlayerTeamToLocal(playerTeam)
         localStorage.setItem("wins", currentWins + 1)
+        localStorage.setItem("numFaintedPlayer", 0)
+        localStorage.setItem("numFaintedOpp", 0)
         $('#divider').append('<input id="return" class="battle-btn" type="button" value="BATTLE COMPLETE"/>')
         $('#return').css('background-color', 'yellow').on('click', () => location.href="./selection.html")
     }
@@ -352,7 +350,6 @@ function prepPlayerPokemonTeam (team, currentWins) {
         ${poke.name} gained ${additionalStats} in all stats...</p>`)
     })
 }
-
 
 function prepOppPokemonTeam (team, currentWins) {
     let additionalStats = currentWins;
@@ -422,7 +419,6 @@ function basicAttack(attacker, defender, defenderIdx, whoWasAttacked) {
     if (defender.currentHP <= 0) {
         $('#combat-log').append(`${defender.name} fainted!`)
         defender.fainted = true
-
         return 1
     }
     return 0
