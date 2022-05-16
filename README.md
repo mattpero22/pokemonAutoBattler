@@ -1,4 +1,3 @@
-
 # Pokemon Auto Battler
 ### by Matthew Pero
 ## A randomized, roguelike, pokemon experience built with:
@@ -12,7 +11,7 @@
 Pokemon Auto Battler is a unique game that uses pokemon as the characters in a roguelike adventure. Start by selecting your first pokemon of three randomly generated ones. Following, you're pitted against the computer in a game of... well... randomness. You don't need to do anything except choose your pokemon wisely and hope for the best!
 
 ## Rules
-1. Upon starting the game, select the play button. If there is a local save, you will be prompted to continue to to begin anew.
+1. Upon starting the game, select the play button. If there is a local save, you will be prompted to continue or to begin anew.
 ![titleScreen](https://i.imgur.com/WP1B1y5.png)
 2. Three random pokemon will be generated for you to select from.
    ![pokeSelection](https://i.imgur.com/gf5s6qw.png)
@@ -34,6 +33,7 @@ Pokemon Auto Battler is a unique game that uses pokemon as the characters in a r
 - a pokemon's defense for damage calculation is its DEF + SPD
 - a pokemon that has successfully completed 5 battles with you will evolve!
 - a pokemon that has evolved while part of your team will get twice as many bonus stats
+- local storage saves your game so you can close it and come back later! (Game is deleted when you see game over though!)
 
 ### Future work
 - add animations for the battle scene
