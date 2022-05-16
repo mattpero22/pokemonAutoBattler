@@ -59,29 +59,28 @@ $pokeCard.on("click", function (evt) {
 // event listener for the confirm button
 $('#confirm-btn').on("click", function() {
     let temp = [] // array to store the new value of playerTeam, 
-    let playerTeam = localStorage.getItem('playerTeam') || "noPokemon";
+    let playerTeam = localStorage.getItem('playerTeam') || "noPokemon"; // get the player's team from local and if it doesnt exits call it nopokemon
     if (choices.playerChoice === null) return // players choice should be set
     else if (localStorage.getItem("pokeAdded") === 'true') return // player should not have already added a pokemon this turn
     else {
-        if (playerTeam === 'noPokemon') temp.push(choices.playerChoice)
+        if (playerTeam === 'noPokemon') temp.push(choices.playerChoice) // if there are no pokemon just slap the new one on
         else {
-            temp = playerTeam.split(",")
-            if (temp.length === 6) {
-                localStorage.setItem("maxTeamSize", true)
-                activateBattle();
+            temp = playerTeam.split(",")    // otherwise split the string that comes back as csv
+            if (temp.length === 6) {                // if youre at the max length of a team (6) 
+                localStorage.setItem("maxTeamSize", true)   // set the maxTeamSize flag to true in local
+                activateBattle();   // set the battle button to active
                 return
             }
-            temp.push(choices.playerChoice)
+            temp.push(choices.playerChoice) // add pokemon to the array we split if we dont have 6
         }
-        localStorage.setItem('playerTeam', temp)
-        localStorage.setItem('pokeAdded', true)
-        let pabPoke = new PabPokemon(getPokemonByName(choices.playerChoice))
-        localStorage.setItem(`pabPoke${temp.length}`, JSON.stringify(pabPoke))
+        localStorage.setItem('playerTeam', temp)    // store the new team in local
+        localStorage.setItem('pokeAdded', true)     // set pokemon added flag to true so we cant add another one 
         
-       
+        let pabPoke = new PabPokemon(getPokemonByName(choices.playerChoice))        // store the pokemon selected as new PabPokemon() class
+        localStorage.setItem(`pabPoke${temp.length}`, JSON.stringify(pabPoke))
         newTeamPoke = getPokemonByName(temp[temp.length - 1])
-        $(".inactive:first").append(`<img src="${newTeamPoke.sprites.front_default}"/>`).removeClass('inactive')
-        $("#tobattle-btn").css("background-color", "yellow").on("click", function() {
+        $(".inactive:first").append(`<img src="${newTeamPoke.sprites.front_default}"/>`).removeClass('inactive')    // adds the new poke to the team bar
+        $("#tobattle-btn").css("background-color", "yellow").on("click", function() {   
             location.href="./battle.html"
             localStorage.setItem("pokeAdded", false)
         })

@@ -41,8 +41,6 @@ body {
 }
 
 .poke-card:hover {
-    -ms-transform: scale(1.1); /* IE 9 */
-    -webkit-transform: scale(1.1); /* Safari 3-8 */
     transform: scale(1.1);
     background-color: rgba(181, 213, 239, 0.90);;
   }

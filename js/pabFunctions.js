@@ -92,7 +92,7 @@ function getValidPokemonChoice(region) {
         let pokemon = getPokemonByNum(Math.floor(Math.random() * pokemonRange));    // get a pokemon object 
         let pokeSpec = getPokemonSpeciesByURL(pokemon.species.url);                 // get the pokemon species object
         if (pokeSpec.is_legendary === false && pokeSpec.is_mythical === false) {    // check if it is a legendary or mythic
-            if(ultraBeasts.includes(pokemon.name) === false){
+            if(ultraBeasts.includes(pokemon.name) === false){                       // check if it is an ultrabeast
                 validChoice = true
                 let pokeEvoChain = getPokemonEvoChainByURL(pokeSpec.evolution_chain.url);   //if it isnt, get the pokemons evolution chain object
                 if(pokeEvoChain.chain.species.name == pokemon.name) {       //if the pokemons chain name is the same as its name, it means it is the first in the chain and is a viable pokemon to start
@@ -213,14 +213,14 @@ function battle() {  // take in the playerTeam as an arg and then take in the op
     let currentWins = parseInt(localStorage.getItem("wins"))
 
     // PRE BATTLE
-    displayPlayerTeam(playerBattleTeam);
+    displayPlayerTeam(playerBattleTeam);        // display teams to windows
     displayOpponentTeam(oppBattleTeam);
     prepPlayerPokemonTeam(playerBattleTeam, currentWins)     //prep the player's team based on round number and give feedback in combat log
     prepOppPokemonTeam(oppBattleTeam, currentWins)
-    displayPlayerTeamHealth(playerBattleTeam)
+    displayPlayerTeamHealth(playerBattleTeam)   // display the health of all pokemon current / total
     displayOppTeamHealth(oppBattleTeam)
-    let firstMove = coinFlip();
-    let nextMove = null;
+    let firstMove = coinFlip();     // find out who goes first  
+    let nextMove = null;    // loop variables
     let winner = null;
     let numPlayerAttacks = 0;
     let numOppAttacks = 0;
