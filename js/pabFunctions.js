@@ -39,6 +39,11 @@ const typeColor = {
 // ultra beasts data structure
 let ultraBeasts =["nihilego","buzzwole","pheromosa","xurkitree","celesteela","kartana","guzzlord","poipole","naganadel","stakataka","blacephalon"]
 
+// annoying pokemon to call from the api
+let errorPokemon = [{
+    'pumpkaboo': 710,
+}]
+
 // Function to change screen
 function fadeScreen() {
     $('body').fadeOut(5)
